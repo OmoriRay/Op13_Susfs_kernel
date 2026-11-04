@@ -30,6 +30,12 @@ licenses are preserved.
 The rotational-device test uses the 6.6 `!blk_queue_nonrot(q)` equivalent of the
 newer `BLK_FEAT_ROTATIONAL` queue-limits feature.
 
+LLVM 23 enables `__counted_by`, unlike the original LLVM 18 build. Legacy
+genksyms includes this non-layout annotation in type hashes. The compatibility
+patch excludes it only under `__GENKSYMS__`, retaining normal compiler bounds
+instrumentation. Four interconnect CRCs are checked before the full build,
+followed by all sampled vendor imports before packaging.
+
 Existing WALT/HMBIRD/slim_walt interfaces remain available. This build does not
 force their runtime activation or add a frequency/affinity controller. Scene EP
 and A-SOUL remain the intended user environment. PGO, proprietary KFAS/hybrid

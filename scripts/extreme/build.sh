@@ -1,18 +1,28 @@
 #!/usr/bin/env bash
 set -euo pipefail
 variant="$1"
+stage="${2:-all}"
+case "$stage" in all|prepare|precheck|compile|package) ;; *) exit 2 ;; esac
 root="$(pwd)"
 report="$root/reports/$variant"
 mkdir -p "$report" toolchain
+export PATH="$root/toolchain/bin:$PATH"
+export LD_LIBRARY_PATH="$root/toolchain/lib:${LD_LIBRARY_PATH:-}"
+export KBUILD_BUILD_USER=OmoriRay KBUILD_BUILD_HOST=GitHubActions
+export KBUILD_BUILD_TIMESTAMP="$(git show -s --format=%cD HEAD)"
+export SOURCE_DATE_EPOCH="$(git show -s --format=%ct HEAD)"
+if [[ "$stage" == prepare || "$stage" == all ]]; then
 python3 - "$variant" <<'PY'
 import json,sys
 from pathlib import Path
 import subprocess
-if sys.argv[1]=='lab-max':
-    patch=Path('patches/extreme/0100-adios-3.3.0-backport.patch').resolve()
+patches=['0004-counted-by-genksyms-compat.patch']
+if sys.argv[1]=='lab-max':patches.append('0100-adios-3.3.0-backport.patch')
+for name in patches:
+    patch=Path('patches/extreme',name).resolve()
     for options in [['--check'],[]]:
         subprocess.run(['git','apply',*options,'--directory=kernel_workspace/common','--whitespace=error-all',str(patch)],check=True)
-    assert '#define ADIOS_VERSION "3.3.0"' in Path('kernel_workspace/common/block/adios.c').read_text()
+if sys.argv[1]=='lab-max':assert '#define ADIOS_VERSION "3.3.0"' in Path('kernel_workspace/common/block/adios.c').read_text()
 PY
 python3 - <<'PY'
 import json,subprocess,hashlib
@@ -23,21 +33,18 @@ assert hashlib.file_digest(p.open('rb'),'sha256').hexdigest()==x['sha256']
 subprocess.run(['tar','--use-compress-program=zstd -d --long=31','-xf',str(p),'--strip-components=1','-C','toolchain'],check=True)
 p.unlink()
 PY
-export PATH="$root/toolchain/bin:$PATH"
-export LD_LIBRARY_PATH="$root/toolchain/lib:${LD_LIBRARY_PATH:-}"
 clang --version | tee "$report/clang-version.txt"
 ld.lld --version | tee "$report/lld-version.txt"
 clang --version | grep -F '23.1.5'
-export KBUILD_BUILD_USER=OmoriRay KBUILD_BUILD_HOST=GitHubActions
-export KBUILD_BUILD_TIMESTAMP="$(git show -s --format=%cD HEAD)"
-export SOURCE_DATE_EPOCH="$(git show -s --format=%ct HEAD)"
 python3 scripts/extreme/configure.py "$variant"
+fi
 out="$root/kernel_workspace/out-$variant"
 args=(-C "$root/kernel_workspace/common" "O=$out" ARCH=arm64 LLVM=1 LLVM_IAS=1)
 if [[ "$variant" == lab-max ]]; then args+=(KCFLAGS=-mtune=oryon-1); fi
-make "${args[@]}" -j2 V=1 fs/proc/task_mmu.o fs/susfs.o mm/huge_memory.o block/adios.o 2>&1 | tee "$report/precheck.log"
+if [[ "$stage" == precheck || "$stage" == all ]]; then
+make "${args[@]}" -j2 V=1 KBUILD_SYMTYPES=1 fs/proc/task_mmu.o fs/susfs.o mm/huge_memory.o block/adios.o drivers/interconnect/core.o 2>&1 | tee "$report/precheck.log"
 python3 - "$out" "$report" <<'PY'
-import sys,json
+import sys,json,re,shutil
 from pathlib import Path
 out=Path(sys.argv[1]);report=Path(sys.argv[2]);records=[]
 for name in ['fs/proc/.task_mmu.o.cmd','fs/.susfs.o.cmd','mm/.huge_memory.o.cmd','block/.adios.o.cmd']:
@@ -45,7 +52,20 @@ for name in ['fs/proc/.task_mmu.o.cmd','fs/.susfs.o.cmd','mm/.huge_memory.o.cmd'
     assert '-fsanitize=kcfi' in text or '-fsanitize=cfi' in text,name
     records.append({'file':name,'O3':True,'CFI':True})
 (report/'compiler-command-checks.json').write_text(json.dumps(records,indent=2))
+text=(out/'drivers/interconnect/.core.o.cmd').read_text()
+actual={k:int(v,16) for k,v in re.findall(r'#SYMVER\s+(\w+)\s+(0x[0-9a-fA-F]+)',text)}
+samples=json.loads(Path('scripts/extreme/vendor-imports.json').read_text())
+names=['icc_set_bw','icc_set_tag','of_icc_get','icc_put']
+expected={v['symbol']:int(v['crc'],16) for m in samples['modules'] for v in m['imports'] if v['symbol'] in names}
+checks=[{'symbol':k,'expected':hex(expected[k]),'actual':hex(actual[k]) if k in actual else None} for k in names]
+print('Interconnect CRC precheck:',json.dumps(checks))
+(report/'interconnect-crc-precheck.json').write_text(json.dumps(checks,indent=2))
+symtypes=out/'drivers/interconnect/core.symtypes'
+if symtypes.exists():shutil.copyfile(symtypes,report/'interconnect-core.symtypes')
+assert all(actual.get(k)==expected[k] for k in names),'Interconnect CRC precheck failed; no full build started'
 PY
+fi
+if [[ "$stage" == compile || "$stage" == all ]]; then
 jobs="$(nproc)"
 if [[ "$jobs" -gt 4 ]]; then jobs=4; fi
 make "${args[@]}" -j"$jobs" Image modules 2>&1 | tee "$report/build.log"
@@ -57,4 +77,7 @@ llvm-nm -n "$out/vmlinux" | grep -E 'ksu_handle_susfs_cmd|susfs_set_priority_uid
 cp "$out/include/generated/utsrelease.h" "$report/utsrelease.h"
 mkdir -p artifacts
 zstd -T2 -5 "$out/vmlinux" -o "artifacts/vmlinux-$variant.zst"
+fi
+if [[ "$stage" == package || "$stage" == all ]]; then
 python3 scripts/extreme/package.py "$variant"
+fi

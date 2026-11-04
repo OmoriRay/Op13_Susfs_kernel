@@ -27,4 +27,5 @@ report={'scope':samples['scope'],'matching_import_records':matched,'unknown_prov
         'full_ABI_compatibility_proven':False,'vermagic_note':'GKI module version rules require separate runtime evaluation'}
 dest=root/'reports'/variant/'vendor-abi-sample-check.json';dest.write_text(json.dumps(report,indent=2))
 print(json.dumps({k:v for k,v in report.items() if k not in ['modules','mismatches']}))
+if mismatches:print(json.dumps(mismatches,indent=2))
 if mismatches:raise SystemExit('Known vendor symbol CRC mismatches: packaging blocked; see ABI sample report')
