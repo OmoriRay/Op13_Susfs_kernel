@@ -1,0 +1,34 @@
+diff --git a/kernel/Kconfig b/kernel/Kconfig
+--- a/kernel/Kconfig
++++ b/kernel/Kconfig
+@@ -233,6 +233,14 @@
+         - Please be reminded that process with open access to the target and redirected path can be detected.
+         - Effective only on processes with uid < 2000.
+ 
++config KSU_SUSFS_PRIORITY_UID_FILTER
++    bool "Enable SUSFS priority UID filtering"
++    depends on KSU_SUSFS
++    default y
++    help
++        Route the upstream SUSFS priority UID filter command through BakaSU.
++        Use the helper from the same pinned SUSFS source to configure it.
++
+ config KSU_SUSFS_SUS_MAP
+     bool "Enable hiding some mmapped real files from different proc maps interfaces"
+     depends on KSU_SUSFS
+diff --git a/kernel/supercall/dispatch.c b/kernel/supercall/dispatch.c
+--- a/kernel/supercall/dispatch.c
++++ b/kernel/supercall/dispatch.c
+@@ -1168,6 +1168,12 @@
+         return 0;
+     }
+ #endif // #ifdef CONFIG_KSU_SUSFS_SUS_MAP
++#ifdef CONFIG_KSU_SUSFS_PRIORITY_UID_FILTER
++    case CMD_SUSFS_SET_PRIORITY_UID_FILTER: {
++        susfs_set_priority_uid_filter(arg);
++        return 0;
++    }
++#endif
+     case CMD_SUSFS_ENABLE_AVC_LOG_SPOOFING: {
+         susfs_set_avc_log_spoofing(arg);
+         return 0;

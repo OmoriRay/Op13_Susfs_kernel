@@ -7,6 +7,7 @@ from pathlib import Path
 import shutil
 import subprocess
 import sys
+import tarfile
 
 ROOT=Path(__file__).resolve().parents[2]
 WORK=ROOT/'kernel_workspace'
@@ -62,7 +63,7 @@ def resolve_conflicts(tree,kind):
     if unresolved:
         raise RuntimeError(f'{kind}: {len(unresolved)} source conflicts require explicit review; see reports/conflicts')
 
-def main():
+def lts_audit():
     WORK.mkdir(exist_ok=True);REPORT.mkdir(exist_ok=True)
     shutil.copyfile(Path(__file__).with_name('sources.json'),REPORT/'sources.json')
     common=WORK/'common'
@@ -85,8 +86,68 @@ def main():
     (REPORT/'lts-oem.patch').write_bytes(output('git','diff',LOCK['common']['commit'],'HEAD',cwd=common))
     print('LTS source preparation complete',flush=True)
 
+def apply(tree,name):
+    patch=ROOT/'patches/extreme'/name
+    run('git','apply','--check','--whitespace=error-all',patch,cwd=tree)
+    run('git','apply','--whitespace=error-all',patch,cwd=tree)
+
+def main():
+    WORK.mkdir(exist_ok=True);REPORT.mkdir(exist_ok=True)
+    shutil.copyfile(Path(__file__).with_name('sources.json'),REPORT/'sources.json')
+    common=WORK/'common'
+    checkout(LOCK['common']['repo'],LOCK['common']['commit'],common)
+    baka=WORK/'BakaSU'
+    run('git','clone',LOCK['bakasu']['repo'],baka)
+    run('git','checkout','--detach',LOCK['bakasu']['commit'],cwd=baka)
+    assert output('git','rev-parse','HEAD',cwd=baka).decode().strip()==LOCK['bakasu']['commit']
+    assert int(output('git','rev-list','--count','HEAD',cwd=baka))+30700==35257
+    archive=WORK/'susfs.tar.gz'
+    run('curl','--fail','--location','--retry','3','--silent','--show-error',LOCK['susfs']['archive'],'-o',archive)
+    assert hashlib.file_digest(archive.open('rb'),'sha256').hexdigest()==LOCK['susfs']['sha256']
+    susfs=WORK/'susfs';susfs.mkdir()
+    with tarfile.open(archive) as t:
+        for member in t:
+            if member.isdir():continue
+            if not member.isfile():raise RuntimeError('Unexpected non-regular SUSFS archive entry')
+            rel=Path(*Path(member.name).parts[1:]);target=susfs/rel
+            assert target.resolve().is_relative_to(susfs.resolve())
+            target.parent.mkdir(parents=True,exist_ok=True)
+            target.write_bytes(t.extractfile(member).read())
+    for path in ['fs/susfs.c','include/linux/susfs.h','include/linux/susfs_def.h']:
+        shutil.copyfile(susfs/'kernel_patches'/path,common/path)
+    link=common/'drivers/kernelsu'
+    assert not link.exists()
+    link.symlink_to(os.path.relpath(baka/'kernel',link.parent),target_is_directory=True)
+    p=common/'drivers/Makefile';p.write_text(p.read_text()+'\nobj-$(CONFIG_KSU) += kernelsu/\n')
+    p=common/'drivers/Kconfig';text=p.read_text();pos=text.rfind('endmenu')
+    assert pos>=0;p.write_text(text[:pos]+'source "drivers/kernelsu/Kconfig"\n\n'+text[pos:])
+    apply(common,'0001-susfs-c7f670f5-oem118.patch')
+    apply(baka,'0002-bakasu-priority-uid.patch')
+    apply(common,'0003-o3-and-configurable-64k-mthp.patch')
+    assert 'ksu_selinux_hide_running' not in (common/'security/selinux/hooks.c').read_text()
+    assert 'CMD_SUSFS_SET_PRIORITY_UID_FILTER' in (baka/'kernel/supercall/dispatch.c').read_text()
+    for tree in (common,baka):run('git','diff','--check',cwd=tree)
+    rejects=list(common.rglob('*.rej'))
+    assert not rejects,rejects
+    version={'actual_kernel':'6.6.118','lts_target':'6.6.161','lts_status':'not_merged_130_conflicting_OEM_Android_files',
+             'lts_audit_run':41858601891,'bakasu':LOCK['bakasu'],'susfs':LOCK['susfs']['commit'],
+             'selinux_hide_owner':'BakaSU; SUSFS native hooks/selinuxfs/services/status sections excluded together',
+             'vendor_module_ABI_verified':False,'boot_tested':False,'performance_tested':False}
+    (REPORT/'source-version.json').write_text(json.dumps(version,indent=2))
+    manifests=[]
+    for patch in sorted((ROOT/'patches/extreme').glob('*.patch')):
+        manifests.append({'file':patch.name,'sha256':hashlib.file_digest(patch.open('rb'),'sha256').hexdigest(),
+                          'applied_in_prepare':not patch.name.startswith('0100')})
+    (REPORT/'patches.json').write_text(json.dumps(manifests,indent=2))
+    (REPORT/'common-changes.patch').write_bytes(output('git','diff','--binary',cwd=common))
+    (REPORT/'bakasu-changes.patch').write_bytes(output('git','diff','--binary',cwd=baka))
+    run('tar','--zstd','-cf',ROOT/'prepared-sources.tar.zst','--exclude=common/.git','-C',WORK,'common','BakaSU','susfs')
+    print('Pinned OEM 6.6.118 + current BakaSU/SUSFS + O3/mTHP sources prepared',flush=True)
+
 if __name__=='__main__':
-    try:main()
+    try:
+        if '--lts-audit' in sys.argv:lts_audit()
+        else:main()
     except Exception as e:
         REPORT.mkdir(exist_ok=True)
         (REPORT/'failure.txt').write_text(str(e)+'\n')

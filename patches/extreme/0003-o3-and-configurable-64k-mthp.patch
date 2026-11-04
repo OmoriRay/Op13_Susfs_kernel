@@ -1,0 +1,77 @@
+diff --git a/Makefile b/Makefile
+--- a/Makefile
++++ b/Makefile
+@@ -839,6 +839,9 @@
+ ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE
+ KBUILD_CFLAGS += -O2
+ KBUILD_RUSTFLAGS += -Copt-level=2
++else ifdef CONFIG_CC_OPTIMIZE_FOR_PERFORMANCE_O3
++KBUILD_CFLAGS += -O3
++KBUILD_RUSTFLAGS += -Copt-level=3
+ else ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
+ KBUILD_CFLAGS += -Os
+ KBUILD_RUSTFLAGS += -Copt-level=s
+diff --git a/init/Kconfig b/init/Kconfig
+--- a/init/Kconfig
++++ b/init/Kconfig
+@@ -1414,6 +1414,12 @@
+ 	  This is the default optimization level for the kernel, building
+ 	  with the "-O2" compiler flag for best performance and most
+ 	  helpful compile-time warnings.
++
++config CC_OPTIMIZE_FOR_PERFORMANCE_O3
++	bool "Optimize for maximum performance (-O3)"
++	help
++	  Compile the kernel with -O3. Measure code size and latency before
++	  selecting this option for a particular workload.
+ 
+ config CC_OPTIMIZE_FOR_SIZE
+ 	bool "Optimize for size (-Os)"
+diff --git a/mm/Kconfig b/mm/Kconfig
+--- a/mm/Kconfig
++++ b/mm/Kconfig
+@@ -218,6 +218,14 @@
+ 	  statistics about what's happening in zsmalloc and exports that
+ 	  information to userspace via debugfs.
+ 	  If unsure, say N.
++
++config OP13_MTHP_64K_DEFAULT
++	bool "Prefer 64K anonymous mTHP by default"
++	depends on ARM64 && ARM64_4K_PAGES && TRANSPARENT_HUGEPAGE
++	default n
++	help
++	  Enable order-4 anonymous mTHP unless thp_anon explicitly selects
++	  another policy. Existing sysfs controls remain writable.
+ 
+ config ZSMALLOC_CHAIN_SIZE
+ 	int "Maximum number of physical pages per-zspage"
+diff --git a/mm/huge_memory.c b/mm/huge_memory.c
+--- a/mm/huge_memory.c
++++ b/mm/huge_memory.c
+@@ -65,7 +65,11 @@
+ #ifdef CONFIG_TRANSPARENT_HUGEPAGE_MADVISE
+ 	(1<<TRANSPARENT_HUGEPAGE_REQ_MADV_FLAG)|
+ #endif
++#ifdef CONFIG_OP13_MTHP_64K_DEFAULT
++	(1<<TRANSPARENT_HUGEPAGE_DEFRAG_KSWAPD_OR_MADV_FLAG)|
++#else
+ 	(1<<TRANSPARENT_HUGEPAGE_DEFRAG_REQ_MADV_FLAG)|
++#endif
+ 	(1<<TRANSPARENT_HUGEPAGE_DEFRAG_KHUGEPAGED_FLAG)|
+ 	(1<<TRANSPARENT_HUGEPAGE_USE_ZERO_PAGE_FLAG);
+ 
+@@ -649,8 +653,13 @@
+ 	 * disable all other sizes. powerpc's PMD_ORDER isn't a compile-time
+ 	 * constant so we have to do this here.
+ 	 */
+-	if (!anon_orders_configured)
++	if (!anon_orders_configured) {
+ 		huge_anon_orders_inherit = BIT(PMD_ORDER);
++#ifdef CONFIG_OP13_MTHP_64K_DEFAULT
++		/* 4K base pages: order 4 is 64K; honor explicit boot policy. */
++		huge_anon_orders_always = BIT(4);
++#endif
++	}
+ 
+ 	*hugepage_kobj = kobject_create_and_add("transparent_hugepage", mm_kobj);
+ 	if (unlikely(!*hugepage_kobj)) {

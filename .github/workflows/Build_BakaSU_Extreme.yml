@@ -18,13 +18,20 @@ concurrency:
 
 jobs:
   prepare:
-    name: Prepare and audit 6.6.161 OEM sources
+    name: Prepare pinned OEM sources and current SUSFS
     runs-on: ubuntu-24.04
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v5
       - name: Prepare pinned upstream integration
         run: python3 scripts/extreme/prepare.py
+      - name: Upload prepared source snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: OP13-BakaSU-V2-prepared-sources
+          path: prepared-sources.tar.zst
+          compression-level: 0
+          retention-days: 7
       - name: Upload source audit and exact conflicts
         if: always()
         uses: actions/upload-artifact@v4
@@ -33,3 +40,51 @@ jobs:
           path: reports/
           retention-days: 14
           if-no-files-found: error
+  build:
+    name: Build ${{ matrix.variant }}
+    needs: prepare
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [extreme, lab-full-lto, lab-max]
+    steps:
+      - uses: actions/checkout@v5
+      - name: Free runner disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo apt-get clean
+          df -h
+      - name: Install build dependencies
+        run: |
+          sudo apt-get -o Acquire::Retries=3 update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential bc bison flex gawk libssl-dev libelf-dev libncurses-dev zlib1g-dev dwarves python3-pyelftools zstd lz4 cpio rsync
+          sudo fallocate -l 8G /swapfile-op13
+          sudo chmod 600 /swapfile-op13
+          sudo mkswap /swapfile-op13
+          sudo swapon /swapfile-op13
+      - uses: actions/download-artifact@v4
+        with:
+          name: OP13-BakaSU-V2-prepared-sources
+      - name: Extract prepared source tree
+        run: |
+          mkdir -p kernel_workspace
+          tar --zstd -xf prepared-sources.tar.zst -C kernel_workspace
+          rm prepared-sources.tar.zst
+      - name: Compile and inspect kernel package
+        run: bash scripts/extreme/build.sh '${{ matrix.variant }}'
+      - name: Upload build evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: OP13-BakaSU-V2-${{ matrix.variant }}-audit
+          path: reports/
+          retention-days: 14
+      - name: Upload compiled artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: OP13-BakaSU-V2-${{ matrix.variant }}
+          path: artifacts/
+          compression-level: 0
+          retention-days: 14
