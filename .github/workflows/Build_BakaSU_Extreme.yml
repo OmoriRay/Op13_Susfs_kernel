@@ -1,0 +1,35 @@
+name: OP13 BakaSU Extreme V2
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [bakasu-extreme-v2]
+    paths:
+      - .github/workflows/Build_BakaSU_Extreme.yml
+      - scripts/extreme/**
+      - patches/extreme/**
+
+permissions:
+  contents: read
+
+concurrency:
+  group: bakasu-extreme-v2-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  prepare:
+    name: Prepare and audit 6.6.161 OEM sources
+    runs-on: ubuntu-24.04
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v5
+      - name: Prepare pinned upstream integration
+        run: python3 scripts/extreme/prepare.py
+      - name: Upload source audit and exact conflicts
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: OP13-BakaSU-V2-source-audit
+          path: reports/
+          retention-days: 14
+          if-no-files-found: error

@@ -1,0 +1,8 @@
+{
+  "common": {"repo": "https://github.com/cctv18/android_kernel_common_oneplus_sm8750.git", "commit": "2a4726b11594dd57d0779d2685fad5c81e5ed553"},
+  "linux": {"repo": "https://github.com/gregkh/linux.git", "base": "4791134e4aebe300af2b409dc550610ef69fae3e", "target": "b5a1dc3ad4822c6edfb53429e9a3759c9b0ac2be", "version": "6.6.161"},
+  "bakasu": {"repo": "https://github.com/Baka-SU/BakaSU.git", "commit": "516d3e87fbc986ccefdde2c2765f1700612441a9", "version_code": 35257, "uapi": 6},
+  "susfs": {"commit": "c7f670f57b7d43d75066b6657f8aee9cdf580d96", "archive": "https://gitlab.com/api/v4/projects/simonpunk%2Fsusfs4ksu/repository/archive.tar.gz?sha=c7f670f57b7d43d75066b6657f8aee9cdf580d96", "sha256": "0a5909fad19a8d937c40337901a9ed87dd841954b0649e4c953a1ba6e6313049"},
+  "llvm": {"version": "23.1.5", "url": "https://github.com/llvm/llvm-project/releases/download/llvmorg-23.1.5/LLVM-23.1.5-Linux-X64.tar.zst", "sha256": "c3107384835f788768f614db610e87fba7077f125ca950eb02a78bab0a308065"},
+  "ak3": {"repo": "https://github.com/osm0sis/AnyKernel3.git", "commit": "020dfeccf9d7e962a48400fc94d3e451df92eead"}
+}
