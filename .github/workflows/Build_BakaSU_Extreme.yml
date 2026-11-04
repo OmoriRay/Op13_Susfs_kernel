@@ -2,15 +2,19 @@ name: OP13 BakaSU Extreme V2
 
 on:
   workflow_dispatch:
-  push:
-    branches: [bakasu-extreme-v2]
-    paths:
-      - .github/workflows/Build_BakaSU_Extreme.yml
-      - scripts/extreme/**
-      - patches/extreme/**
+    inputs:
+      prepared_run:
+        description: Existing successful source snapshot run, or 0 to prepare sources
+        type: string
+        default: '0'
+      variants:
+        description: JSON array of profiles to compile
+        type: string
+        default: '["extreme","lab-full-lto","lab-max"]'
 
 permissions:
   contents: read
+  actions: read
 
 concurrency:
   group: bakasu-extreme-v2-${{ github.ref }}
@@ -18,6 +22,7 @@ concurrency:
 
 jobs:
   prepare:
+    if: inputs.prepared_run == '0'
     name: Prepare pinned OEM sources and current SUSFS
     runs-on: ubuntu-24.04
     timeout-minutes: 60
@@ -43,12 +48,13 @@ jobs:
   build:
     name: Build ${{ matrix.variant }}
     needs: prepare
+    if: always() && (needs.prepare.result == 'success' || (inputs.prepared_run != '0' && inputs.prepared_run != ''))
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     strategy:
       fail-fast: false
       matrix:
-        variant: [extreme, lab-full-lto, lab-max]
+        variant: ${{ fromJSON(inputs.variants) }}
     steps:
       - uses: actions/checkout@v5
       - name: Free runner disk space
@@ -67,6 +73,8 @@ jobs:
       - uses: actions/download-artifact@v4
         with:
           name: OP13-BakaSU-V2-prepared-sources
+          github-token: ${{ github.token }}
+          run-id: ${{ inputs.prepared_run == '0' && github.run_id || inputs.prepared_run }}
       - name: Extract prepared source tree
         run: |
           mkdir -p kernel_workspace
@@ -79,7 +87,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: OP13-BakaSU-V2-${{ matrix.variant }}-audit
-          path: reports/
+          path: |
+            reports/
+            kernel_workspace/out-*/arch/arm64/boot/Image
+            kernel_workspace/out-*/Module.symvers
           retention-days: 14
       - name: Upload compiled artifacts
         uses: actions/upload-artifact@v4
