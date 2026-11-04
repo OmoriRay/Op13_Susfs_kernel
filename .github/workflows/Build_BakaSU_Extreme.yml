@@ -17,7 +17,7 @@ permissions:
   actions: read
 
 concurrency:
-  group: bakasu-extreme-v2-${{ github.ref }}
+  group: bakasu-extreme-v2-${{ github.ref }}-${{ inputs.variants }}
   cancel-in-progress: false
 
 jobs:

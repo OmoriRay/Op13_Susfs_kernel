@@ -27,6 +27,8 @@ derived from firelzrd/adios commit 6fa79e32d9a33a0d671b108074aca2b5df9cd967,
 patches/stable/0001-linux6.12.44-ADIOS-3.3.0.patch; the base tree already supplies
 the scheduler Kconfig, Makefile and elevator integration. Upstream authors and
 licenses are preserved.
+The rotational-device test uses the 6.6 `!blk_queue_nonrot(q)` equivalent of the
+newer `BLK_FEAT_ROTATIONAL` queue-limits feature.
 
 Existing WALT/HMBIRD/slim_walt interfaces remain available. This build does not
 force their runtime activation or add a frequency/affinity controller. Scene EP

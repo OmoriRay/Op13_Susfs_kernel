@@ -649,7 +649,7 @@ diff --git a/block/adios.c b/block/adios.c
  	eq->elevator_data = ad;
  
 -	ad->is_rotational = !blk_queue_nonrot(q);
-+	ad->is_rotational = !!(q->limits.features & BLK_FEAT_ROTATIONAL);
++	ad->is_rotational = !blk_queue_nonrot(q);
  	ad->global_latency_window = (ad->is_rotational)?
  		default_global_latency_window_rotational:
  		default_global_latency_window;
