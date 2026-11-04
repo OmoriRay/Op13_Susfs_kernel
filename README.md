@@ -4,6 +4,24 @@
   README revision: 2026-10-18 (ColorOS 17 / Android 17 · SukiSU Ultra v114 · BakaSU v111)
 -->
 
+## BakaSU Extreme V2 实验构建
+
+本分支新增独立的 [Extreme V2 工作流](../../actions/workflows/Build_BakaSU_Extreme.yml)。
+共同配置为 BakaSU 35257 / UAPI 6、SUSFS c7f670f5 适配、LLVM 23.1.5、真实 O3、
+可配置 64K mTHP、zsmalloc chain 16、LZ4 默认 ZRAM 和 enforcing CFI。
+
+| 版本 | LTO | HZ | ADIOS | 额外调优 |
+|---|---|---|---|---|
+| extreme | Thin | 250 | 3.1.6 | 主候选 |
+| lab-full-lto | Full | 250 | 3.1.6 | Full LTO 对照 |
+| lab-max | Full | 1000 | 3.3.0 回移 | 实验性 `-mtune=oryon-1` |
+
+**这些包的真实 OEM 底座为 6.6.118。** 6.6.161 预审发现 130 个文件发生合并冲突，
+因此没有纳入这些构建，也没有修改版本号冒充完成升级。
+保留 Scene EP / A-SOUL 使用环境，不自动增加频率控制器、安装调优模块或刷写手机。
+构建通过、样本 CRC 匹配均不等于实机启动、完整 ABI 或游戏性能已经验证。
+详细来源、补丁和限制见 [制作说明](scripts/extreme/README.md)。
+
 <h1 align="center">If This Kernel is useful to you, a ⭐ helps others find it.</h1>
 
 <div align="center">
