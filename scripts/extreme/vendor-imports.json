@@ -1,0 +1,3307 @@
+{
+  "scope": "Six offline vendor module samples; not complete ABI coverage",
+  "modules": [
+    {
+      "filename": "clk-scmi.ko",
+      "sha256": "a8840d3502d8e76d70468e7b93ecd45e23408f906b6e389acfdb28c314b0da09",
+      "vermagic": "6.6.118-android15-8-o-g1524d9b076be-4k SMP preempt mod_unload modversions aarch64",
+      "imports": [
+        {
+          "symbol": "scmi_driver_register",
+          "crc": "0x952cde8f"
+        },
+        {
+          "symbol": "scmi_driver_unregister",
+          "crc": "0xad3c5748"
+        },
+        {
+          "symbol": "devm_kmalloc",
+          "crc": "0x9360f980"
+        },
+        {
+          "symbol": "devm_kfree",
+          "crc": "0xadd4c239"
+        },
+        {
+          "symbol": "devm_clk_hw_register",
+          "crc": "0xa80e5c77"
+        },
+        {
+          "symbol": "clk_hw_set_rate_range",
+          "crc": "0x9b87974f"
+        },
+        {
+          "symbol": "_dev_err",
+          "crc": "0x3b00ee3e"
+        },
+        {
+          "symbol": "of_clk_hw_onecell_get",
+          "crc": "0x4dbf7292"
+        },
+        {
+          "symbol": "devm_of_clk_add_hw_provider",
+          "crc": "0x6c321e86"
+        },
+        {
+          "symbol": "__stack_chk_fail",
+          "crc": "0xf0fdf6cb"
+        },
+        {
+          "symbol": "_dev_warn",
+          "crc": "0xa7b4ce54"
+        },
+        {
+          "symbol": "module_layout",
+          "crc": "0x4e276f37"
+        }
+      ]
+    },
+    {
+      "filename": "cpufreq_stats_scmi_v2.ko",
+      "sha256": "da231d287f1f53c1c16b0c1c3eda3cc4c67215ac0d4cc0b73c84c3af1c0dfcfa",
+      "vermagic": "6.6.118-android15-8-o-g1524d9b076be-4k SMP preempt mod_unload modversions aarch64",
+      "imports": [
+        {
+          "symbol": "__platform_driver_register",
+          "crc": "0x279498f1"
+        },
+        {
+          "symbol": "platform_driver_unregister",
+          "crc": "0xf5ab7c57"
+        },
+        {
+          "symbol": "get_qcom_scmi_device",
+          "crc": "0xb0e7a18b"
+        },
+        {
+          "symbol": "devm_kmalloc",
+          "crc": "0x9360f980"
+        },
+        {
+          "symbol": "devm_ioremap",
+          "crc": "0xb66d8c55"
+        },
+        {
+          "symbol": "debugfs_create_dir",
+          "crc": "0x1f1faaa1"
+        },
+        {
+          "symbol": "snprintf",
+          "crc": "0x656e4a6e"
+        },
+        {
+          "symbol": "debugfs_create_file",
+          "crc": "0x44974417"
+        },
+        {
+          "symbol": "_dev_err",
+          "crc": "0x3b00ee3e"
+        },
+        {
+          "symbol": "__stack_chk_fail",
+          "crc": "0xf0fdf6cb"
+        },
+        {
+          "symbol": "__tracepoint_rwmmio_read",
+          "crc": "0xb8a6d228"
+        },
+        {
+          "symbol": "__tracepoint_rwmmio_post_read",
+          "crc": "0x84c83365"
+        },
+        {
+          "symbol": "log_read_mmio",
+          "crc": "0x6b722180"
+        },
+        {
+          "symbol": "log_post_read_mmio",
+          "crc": "0x0c1a5ee3"
+        },
+        {
+          "symbol": "debugfs_file_get",
+          "crc": "0x85e5eee6"
+        },
+        {
+          "symbol": "__kmalloc",
+          "crc": "0xeb233a45"
+        },
+        {
+          "symbol": "kmalloc_caches",
+          "crc": "0x74661383"
+        },
+        {
+          "symbol": "kmalloc_trace",
+          "crc": "0xa8541c9b"
+        },
+        {
+          "symbol": "scnprintf",
+          "crc": "0x96848186"
+        },
+        {
+          "symbol": "simple_read_from_buffer",
+          "crc": "0x9c81ceff"
+        },
+        {
+          "symbol": "debugfs_file_put",
+          "crc": "0x72b9b4c0"
+        },
+        {
+          "symbol": "kfree",
+          "crc": "0x037a0cba"
+        },
+        {
+          "symbol": "default_llseek",
+          "crc": "0x186ee401"
+        },
+        {
+          "symbol": "simple_open",
+          "crc": "0x509826ca"
+        },
+        {
+          "symbol": "module_layout",
+          "crc": "0x4e276f37"
+        }
+      ]
+    },
+    {
+      "filename": "msm_kgsl.ko",
+      "sha256": "caf9366e59cc4ff18801a3caab0018099c04dde1aedeaba0f5947918ac9c10f4",
+      "vermagic": "6.6.118-android15-8-o-4k SMP preempt mod_unload modversions aarch64",
+      "imports": [
+        {
+          "symbol": "request_firmware",
+          "crc": "0x00c22ee1"
+        },
+        {
+          "symbol": "memcpy",
+          "crc": "0x4829a47e"
+        },
+        {
+          "symbol": "release_firmware",
+          "crc": "0xc6d09aa9"
+        },
+        {
+          "symbol": "_dev_err",
+          "crc": "0x3b00ee3e"
+        },
+        {
+          "symbol": "__stack_chk_fail",
+          "crc": "0xf0fdf6cb"
+        },
+        {
+          "symbol": "system_wq",
+          "crc": "0x2d3385d3"
+        },
+        {
+          "symbol": "queue_work_on",
+          "crc": "0x732ac580"
+        },
+        {
+          "symbol": "___ratelimit",
+          "crc": "0x1d24c881"
+        },
+        {
+          "symbol": "alt_cb_patch_nops",
+          "crc": "0xa65c6def"
+        },
+        {
+          "symbol": "kthread_queue_work",
+          "crc": "0x7fd30187"
+        },
+        {
+          "symbol": "_dev_crit",
+          "crc": "0x84e31629"
+        },
+        {
+          "symbol": "strnlen",
+          "crc": "0xa916b694"
+        },
+        {
+          "symbol": "fortify_panic",
+          "crc": "0xcbd4898c"
+        },
+        {
+          "symbol": "of_property_read_string",
+          "crc": "0xd2555b9d"
+        },
+        {
+          "symbol": "socinfo_get_partinfo_part_name",
+          "crc": "0xe698c86e"
+        },
+        {
+          "symbol": "scnprintf",
+          "crc": "0x96848186"
+        },
+        {
+          "symbol": "strscpy",
+          "crc": "0xdd64e639"
+        },
+        {
+          "symbol": "nvmem_cell_get",
+          "crc": "0x1cc4995f"
+        },
+        {
+          "symbol": "nvmem_cell_read",
+          "crc": "0x99f018c4"
+        },
+        {
+          "symbol": "nvmem_cell_put",
+          "crc": "0x85540ebc"
+        },
+        {
+          "symbol": "of_find_node_by_name",
+          "crc": "0x32c20adf"
+        },
+        {
+          "symbol": "of_get_next_child",
+          "crc": "0xd7ef4b48"
+        },
+        {
+          "symbol": "of_property_read_variable_u32_array",
+          "crc": "0x94c5c4a4"
+        },
+        {
+          "symbol": "kfree",
+          "crc": "0x037a0cba"
+        },
+        {
+          "symbol": "_printk",
+          "crc": "0x92997ed8"
+        },
+        {
+          "symbol": "__init_swait_queue_head",
+          "crc": "0x608741b5"
+        },
+        {
+          "symbol": "complete_all",
+          "crc": "0x93d6dd8c"
+        },
+        {
+          "symbol": "__mutex_init",
+          "crc": "0xa571f6b0"
+        },
+        {
+          "symbol": "of_find_property",
+          "crc": "0x8a964733"
+        },
+        {
+          "symbol": "socinfo_get_feature_code",
+          "crc": "0xfcf2dc8e"
+        },
+        {
+          "symbol": "socinfo_get_pcode",
+          "crc": "0xf3617ca8"
+        },
+        {
+          "symbol": "of_get_property",
+          "crc": "0x4ee2a2ad"
+        },
+        {
+          "symbol": "of_property_read_u32_index",
+          "crc": "0x4d5ade10"
+        },
+        {
+          "symbol": "llcc_slice_getd",
+          "crc": "0x2dc32291"
+        },
+        {
+          "symbol": "llcc_slice_putd",
+          "crc": "0xcf51ae91"
+        },
+        {
+          "symbol": "dev_err_probe",
+          "crc": "0xb25b2beb"
+        },
+        {
+          "symbol": "component_bind_all",
+          "crc": "0x889b8ffa"
+        },
+        {
+          "symbol": "__devm_reset_control_get",
+          "crc": "0xc73247c2"
+        },
+        {
+          "symbol": "trace_array_put",
+          "crc": "0x5382f1d5"
+        },
+        {
+          "symbol": "component_unbind_all",
+          "crc": "0x8e3f4c55"
+        },
+        {
+          "symbol": "_dev_warn",
+          "crc": "0xa7b4ce54"
+        },
+        {
+          "symbol": "input_register_handler",
+          "crc": "0xcd2420cf"
+        },
+        {
+          "symbol": "register_pm_notifier",
+          "crc": "0x75966ec2"
+        },
+        {
+          "symbol": "__warn_printk",
+          "crc": "0x56470118"
+        },
+        {
+          "symbol": "reset_control_reset",
+          "crc": "0x24f39c39"
+        },
+        {
+          "symbol": "refcount_warn_saturate",
+          "crc": "0x0296695f"
+        },
+        {
+          "symbol": "mutex_is_locked",
+          "crc": "0x819bebd4"
+        },
+        {
+          "symbol": "jiffies",
+          "crc": "0x15ba50a6"
+        },
+        {
+          "symbol": "__msecs_to_jiffies",
+          "crc": "0x7f02188f"
+        },
+        {
+          "symbol": "mod_timer",
+          "crc": "0x72cd0f7f"
+        },
+        {
+          "symbol": "__wake_up",
+          "crc": "0xe2964344"
+        },
+        {
+          "symbol": "cpu_number",
+          "crc": "0xf8b9acd3"
+        },
+        {
+          "symbol": "__cpu_online_mask",
+          "crc": "0xac594e02"
+        },
+        {
+          "symbol": "preempt_schedule_notrace",
+          "crc": "0xf70e4a4d"
+        },
+        {
+          "symbol": "set_user_nice",
+          "crc": "0x8f6e080a"
+        },
+        {
+          "symbol": "regulator_is_enabled",
+          "crc": "0x15970869"
+        },
+        {
+          "symbol": "msleep",
+          "crc": "0xf9a482f9"
+        },
+        {
+          "symbol": "mutex_lock",
+          "crc": "0xd5977bfb"
+        },
+        {
+          "symbol": "mutex_unlock",
+          "crc": "0xed55cabd"
+        },
+        {
+          "symbol": "qcom_dcvs_register_voter",
+          "crc": "0xaa3c4013"
+        },
+        {
+          "symbol": "qcom_dcvs_hw_minmax_get",
+          "crc": "0x82557b7d"
+        },
+        {
+          "symbol": "qcom_dcvs_unregister_voter",
+          "crc": "0x10254a8d"
+        },
+        {
+          "symbol": "arch_timer_read_counter",
+          "crc": "0x75fb9062"
+        },
+        {
+          "symbol": "_raw_write_lock",
+          "crc": "0xe68efe41"
+        },
+        {
+          "symbol": "_raw_write_unlock",
+          "crc": "0x40235c98"
+        },
+        {
+          "symbol": "strcmp",
+          "crc": "0xe2d5255a"
+        },
+        {
+          "symbol": "memset",
+          "crc": "0xdcb764ad"
+        },
+        {
+          "symbol": "wait_for_completion",
+          "crc": "0x25974000"
+        },
+        {
+          "symbol": "__platform_driver_register",
+          "crc": "0x279498f1"
+        },
+        {
+          "symbol": "platform_driver_unregister",
+          "crc": "0xf5ab7c57"
+        },
+        {
+          "symbol": "llcc_slice_deactivate",
+          "crc": "0x7e5ade52"
+        },
+        {
+          "symbol": "dev_driver_string",
+          "crc": "0x38a93ad8"
+        },
+        {
+          "symbol": "kmalloc_caches",
+          "crc": "0x74661383"
+        },
+        {
+          "symbol": "kmalloc_trace",
+          "crc": "0xa8541c9b"
+        },
+        {
+          "symbol": "__list_del_entry_valid_or_report",
+          "crc": "0x9a835040"
+        },
+        {
+          "symbol": "_raw_read_lock",
+          "crc": "0xfe8c61f0"
+        },
+        {
+          "symbol": "idr_find",
+          "crc": "0x31d7c7bc"
+        },
+        {
+          "symbol": "_raw_read_unlock",
+          "crc": "0xdd4d55b6"
+        },
+        {
+          "symbol": "clk_set_rate",
+          "crc": "0x76d9b876"
+        },
+        {
+          "symbol": "icc_set_bw",
+          "crc": "0x54401b7c"
+        },
+        {
+          "symbol": "srcu_notifier_call_chain",
+          "crc": "0x8879b1ce"
+        },
+        {
+          "symbol": "socinfo_get_partinfo_vulkan_id",
+          "crc": "0xea6623d5"
+        },
+        {
+          "symbol": "__check_object_size",
+          "crc": "0x88db9f48"
+        },
+        {
+          "symbol": "__arch_copy_to_user",
+          "crc": "0x9a85eebb"
+        },
+        {
+          "symbol": "system_cpucaps",
+          "crc": "0x2939a88e"
+        },
+        {
+          "symbol": "dev_pm_opp_get_opp_count",
+          "crc": "0x56d622cb"
+        },
+        {
+          "symbol": "dev_pm_opp_add_dynamic",
+          "crc": "0xb0cd03ab"
+        },
+        {
+          "symbol": "input_register_handle",
+          "crc": "0xb5242671"
+        },
+        {
+          "symbol": "input_open_device",
+          "crc": "0x0e4f3a83"
+        },
+        {
+          "symbol": "input_unregister_handle",
+          "crc": "0xc5281a03"
+        },
+        {
+          "symbol": "input_close_device",
+          "crc": "0xfd8652bb"
+        },
+        {
+          "symbol": "__arch_copy_from_user",
+          "crc": "0x2be0c009"
+        },
+        {
+          "symbol": "of_find_matching_node_and_match",
+          "crc": "0x307d5532"
+        },
+        {
+          "symbol": "of_device_is_available",
+          "crc": "0xfe67dbde"
+        },
+        {
+          "symbol": "component_match_add_release",
+          "crc": "0x644bb27d"
+        },
+        {
+          "symbol": "component_master_add_with_match",
+          "crc": "0x3238078f"
+        },
+        {
+          "symbol": "component_master_del",
+          "crc": "0xb4205bd6"
+        },
+        {
+          "symbol": "of_device_is_compatible",
+          "crc": "0x80bc7084"
+        },
+        {
+          "symbol": "socinfo_get_partinfo_chip_id",
+          "crc": "0x98b5304f"
+        },
+        {
+          "symbol": "srcu_init_notifier_head",
+          "crc": "0xda3a3735"
+        },
+        {
+          "symbol": "cleanup_srcu_struct",
+          "crc": "0xddf09aa6"
+        },
+        {
+          "symbol": "input_unregister_handler",
+          "crc": "0xc948d8c7"
+        },
+        {
+          "symbol": "mutex_trylock",
+          "crc": "0x203392c6"
+        },
+        {
+          "symbol": "kthread_flush_worker",
+          "crc": "0xde48ab31"
+        },
+        {
+          "symbol": "__flush_workqueue",
+          "crc": "0x9166fc03"
+        },
+        {
+          "symbol": "param_ops_bool",
+          "crc": "0x327f4ed5"
+        },
+        {
+          "symbol": "param_ops_uint",
+          "crc": "0x460da8f5"
+        },
+        {
+          "symbol": "of_device_get_match_data",
+          "crc": "0x271ebdb1"
+        },
+        {
+          "symbol": "init_timer_key",
+          "crc": "0x79cf5987"
+        },
+        {
+          "symbol": "timer_delete",
+          "crc": "0x370cfe45"
+        },
+        {
+          "symbol": "qcom_scm_set_remote_state",
+          "crc": "0x9b128a66"
+        },
+        {
+          "symbol": "__const_udelay",
+          "crc": "0xeae3dfd6"
+        },
+        {
+          "symbol": "ktime_get",
+          "crc": "0xb43f9365"
+        },
+        {
+          "symbol": "usleep_range_state",
+          "crc": "0xc3055d20"
+        },
+        {
+          "symbol": "devm_kmalloc",
+          "crc": "0x9360f980"
+        },
+        {
+          "symbol": "__udelay",
+          "crc": "0x9e7d6bd0"
+        },
+        {
+          "symbol": "dev_pm_opp_find_freq_exact",
+          "crc": "0xbd8eac1c"
+        },
+        {
+          "symbol": "dev_pm_opp_get_voltage",
+          "crc": "0x732d1def"
+        },
+        {
+          "symbol": "dev_pm_opp_put",
+          "crc": "0x30f9c20e"
+        },
+        {
+          "symbol": "_raw_spin_lock_irqsave",
+          "crc": "0x34db050b"
+        },
+        {
+          "symbol": "_raw_spin_unlock_irqrestore",
+          "crc": "0xd35cce70"
+        },
+        {
+          "symbol": "timer_delete_sync",
+          "crc": "0x8d586478"
+        },
+        {
+          "symbol": "__kmalloc",
+          "crc": "0xeb233a45"
+        },
+        {
+          "symbol": "of_find_node_opts_by_path",
+          "crc": "0x7c497915"
+        },
+        {
+          "symbol": "__clk_is_enabled",
+          "crc": "0xc6a4a872"
+        },
+        {
+          "symbol": "llcc_slice_activate",
+          "crc": "0x6b7609b9"
+        },
+        {
+          "symbol": "llcc_get_slice_id",
+          "crc": "0xefb7aaf9"
+        },
+        {
+          "symbol": "__tracepoint_rwmmio_write",
+          "crc": "0x0af02b93"
+        },
+        {
+          "symbol": "__tracepoint_rwmmio_post_write",
+          "crc": "0x02a1785f"
+        },
+        {
+          "symbol": "log_write_mmio",
+          "crc": "0xc905402b"
+        },
+        {
+          "symbol": "log_post_write_mmio",
+          "crc": "0xfa4d3c24"
+        },
+        {
+          "symbol": "snprintf",
+          "crc": "0x656e4a6e"
+        },
+        {
+          "symbol": "platform_get_resource_byname",
+          "crc": "0x2045f949"
+        },
+        {
+          "symbol": "devm_ioremap_resource",
+          "crc": "0x969f09fa"
+        },
+        {
+          "symbol": "clk_get",
+          "crc": "0xc78c4692"
+        },
+        {
+          "symbol": "clk_prepare",
+          "crc": "0x7c9a7371"
+        },
+        {
+          "symbol": "clk_enable",
+          "crc": "0x815588a6"
+        },
+        {
+          "symbol": "clk_disable",
+          "crc": "0xb6e6d99d"
+        },
+        {
+          "symbol": "clk_unprepare",
+          "crc": "0xb077e70a"
+        },
+        {
+          "symbol": "clk_put",
+          "crc": "0x2e1ca751"
+        },
+        {
+          "symbol": "__tracepoint_rwmmio_read",
+          "crc": "0xb8a6d228"
+        },
+        {
+          "symbol": "__tracepoint_rwmmio_post_read",
+          "crc": "0x84c83365"
+        },
+        {
+          "symbol": "log_read_mmio",
+          "crc": "0x6b722180"
+        },
+        {
+          "symbol": "log_post_read_mmio",
+          "crc": "0x0c1a5ee3"
+        },
+        {
+          "symbol": "cmd_db_read_addr",
+          "crc": "0x08e39398"
+        },
+        {
+          "symbol": "devm_ioremap",
+          "crc": "0xb66d8c55"
+        },
+        {
+          "symbol": "regulator_set_mode",
+          "crc": "0x54d5cafb"
+        },
+        {
+          "symbol": "_dev_info",
+          "crc": "0x2137b691"
+        },
+        {
+          "symbol": "__memcpy_toio",
+          "crc": "0xf77555cd"
+        },
+        {
+          "symbol": "enable_irq",
+          "crc": "0xfcec0987"
+        },
+        {
+          "symbol": "disable_irq",
+          "crc": "0x3ce4ca6f"
+        },
+        {
+          "symbol": "vzalloc",
+          "crc": "0x40a9b349"
+        },
+        {
+          "symbol": "sg_free_table",
+          "crc": "0xc8c85086"
+        },
+        {
+          "symbol": "clk_bulk_disable",
+          "crc": "0x479f7d4b"
+        },
+        {
+          "symbol": "clk_bulk_unprepare",
+          "crc": "0x63c08029"
+        },
+        {
+          "symbol": "mbox_send_message",
+          "crc": "0x5860e25c"
+        },
+        {
+          "symbol": "clk_bulk_prepare",
+          "crc": "0xead5c8e5"
+        },
+        {
+          "symbol": "clk_bulk_enable",
+          "crc": "0xc7a7e770"
+        },
+        {
+          "symbol": "mbox_free_channel",
+          "crc": "0xefb0fedf"
+        },
+        {
+          "symbol": "iommu_unmap",
+          "crc": "0xf2541f67"
+        },
+        {
+          "symbol": "iommu_detach_device",
+          "crc": "0x5ef3e73b"
+        },
+        {
+          "symbol": "iommu_domain_free",
+          "crc": "0x4e4f1e61"
+        },
+        {
+          "symbol": "vfree",
+          "crc": "0x999e8297"
+        },
+        {
+          "symbol": "kobject_put",
+          "crc": "0x0e5ae00d"
+        },
+        {
+          "symbol": "dma_set_coherent_mask",
+          "crc": "0xaf521960"
+        },
+        {
+          "symbol": "devm_clk_bulk_get_all",
+          "crc": "0x59fc9f65"
+        },
+        {
+          "symbol": "kobject_init_and_add",
+          "crc": "0x15fd77ac"
+        },
+        {
+          "symbol": "mbox_request_channel",
+          "crc": "0x940754b5"
+        },
+        {
+          "symbol": "arm64_use_ng_mappings",
+          "crc": "0xaf56600a"
+        },
+        {
+          "symbol": "ioremap_prot",
+          "crc": "0x40863ba1"
+        },
+        {
+          "symbol": "iounmap",
+          "crc": "0xedc03953"
+        },
+        {
+          "symbol": "_raw_spin_lock",
+          "crc": "0xba8fbd64"
+        },
+        {
+          "symbol": "_raw_spin_unlock",
+          "crc": "0xb5b54b34"
+        },
+        {
+          "symbol": "component_add",
+          "crc": "0x95f9ae5b"
+        },
+        {
+          "symbol": "component_del",
+          "crc": "0x9299928a"
+        },
+        {
+          "symbol": "kstrtobool",
+          "crc": "0x124bad4d"
+        },
+        {
+          "symbol": "kstrtouint",
+          "crc": "0x3b6c41ea"
+        },
+        {
+          "symbol": "kobj_sysfs_ops",
+          "crc": "0xd1033787"
+        },
+        {
+          "symbol": "nvmem_cell_read_u32",
+          "crc": "0xc8347ec4"
+        },
+        {
+          "symbol": "complete",
+          "crc": "0xa6257a2f"
+        },
+        {
+          "symbol": "_raw_write_lock_irq",
+          "crc": "0x3aca0190"
+        },
+        {
+          "symbol": "_raw_write_unlock_irq",
+          "crc": "0x9f76baf4"
+        },
+        {
+          "symbol": "__list_add_valid_or_report",
+          "crc": "0x7e19152a"
+        },
+        {
+          "symbol": "kthread_create_on_node",
+          "crc": "0x8b146f69"
+        },
+        {
+          "symbol": "wake_up_process",
+          "crc": "0xa9b03a93"
+        },
+        {
+          "symbol": "kthread_should_stop",
+          "crc": "0xb3f7646e"
+        },
+        {
+          "symbol": "init_wait_entry",
+          "crc": "0xfe487975"
+        },
+        {
+          "symbol": "prepare_to_wait_event",
+          "crc": "0x8c26d495"
+        },
+        {
+          "symbol": "schedule",
+          "crc": "0x01000e51"
+        },
+        {
+          "symbol": "finish_wait",
+          "crc": "0x92540fbf"
+        },
+        {
+          "symbol": "__init_waitqueue_head",
+          "crc": "0xd9a5ea54"
+        },
+        {
+          "symbol": "kthread_stop",
+          "crc": "0xd2ef8b35"
+        },
+        {
+          "symbol": "devm_kmemdup",
+          "crc": "0x4e8e3496"
+        },
+        {
+          "symbol": "kvmalloc_node",
+          "crc": "0x599fb41c"
+        },
+        {
+          "symbol": "kvfree",
+          "crc": "0x7aa1756e"
+        },
+        {
+          "symbol": "vmalloc",
+          "crc": "0xd6ee688f"
+        },
+        {
+          "symbol": "kthread_create_worker",
+          "crc": "0x9f293f39"
+        },
+        {
+          "symbol": "sysfs_create_files",
+          "crc": "0x38ae6f2c"
+        },
+        {
+          "symbol": "kmem_cache_create",
+          "crc": "0x7837f9ce"
+        },
+        {
+          "symbol": "sched_set_fifo",
+          "crc": "0xb4f7951f"
+        },
+        {
+          "symbol": "wait_for_completion_timeout",
+          "crc": "0x4a3ad70e"
+        },
+        {
+          "symbol": "idr_get_next",
+          "crc": "0x0aec4ab0"
+        },
+        {
+          "symbol": "msm_perf_events_update",
+          "crc": "0x2c5bf99d"
+        },
+        {
+          "symbol": "sched_set_normal",
+          "crc": "0x86f2c4cb"
+        },
+        {
+          "symbol": "llist_reverse_order",
+          "crc": "0x0ddb1cd7"
+        },
+        {
+          "symbol": "llist_add_batch",
+          "crc": "0xc7a1840e"
+        },
+        {
+          "symbol": "kmem_cache_free",
+          "crc": "0x497effac"
+        },
+        {
+          "symbol": "kthread_destroy_worker",
+          "crc": "0x6a37e517"
+        },
+        {
+          "symbol": "kmem_cache_destroy",
+          "crc": "0x9a59bee2"
+        },
+        {
+          "symbol": "kmem_cache_alloc",
+          "crc": "0x271a97d2"
+        },
+        {
+          "symbol": "schedule_timeout",
+          "crc": "0x8ddd8aad"
+        },
+        {
+          "symbol": "_raw_spin_trylock_bh",
+          "crc": "0x8518a4a6"
+        },
+        {
+          "symbol": "_raw_spin_unlock_bh",
+          "crc": "0xe46021ca"
+        },
+        {
+          "symbol": "strstr",
+          "crc": "0x1e6d26a8"
+        },
+        {
+          "symbol": "debugfs_remove",
+          "crc": "0x3ef04b32"
+        },
+        {
+          "symbol": "debugfs_create_file",
+          "crc": "0x44974417"
+        },
+        {
+          "symbol": "simple_attr_open",
+          "crc": "0x652a3d37"
+        },
+        {
+          "symbol": "debugfs_attr_read",
+          "crc": "0x0d73da6a"
+        },
+        {
+          "symbol": "debugfs_attr_write",
+          "crc": "0x9d30f914"
+        },
+        {
+          "symbol": "simple_attr_release",
+          "crc": "0x65966cfc"
+        },
+        {
+          "symbol": "devm_iounmap",
+          "crc": "0xb12a3f5a"
+        },
+        {
+          "symbol": "rb_first",
+          "crc": "0xece784c2"
+        },
+        {
+          "symbol": "rb_next",
+          "crc": "0xca9360b5"
+        },
+        {
+          "symbol": "rb_insert_color",
+          "crc": "0xa5526619"
+        },
+        {
+          "symbol": "rb_erase",
+          "crc": "0x4d9b652b"
+        },
+        {
+          "symbol": "devm_free_irq",
+          "crc": "0x6048921f"
+        },
+        {
+          "symbol": "dma_fence_signal_locked",
+          "crc": "0x60bbb124"
+        },
+        {
+          "symbol": "preempt_schedule",
+          "crc": "0x43b0c9c3"
+        },
+        {
+          "symbol": "simple_read_from_buffer",
+          "crc": "0x9c81ceff"
+        },
+        {
+          "symbol": "sscanf",
+          "crc": "0xbcab6ee6"
+        },
+        {
+          "symbol": "noop_llseek",
+          "crc": "0x58fb8ca8"
+        },
+        {
+          "symbol": "simple_open",
+          "crc": "0x509826ca"
+        },
+        {
+          "symbol": "qmp_send",
+          "crc": "0x01b2e132"
+        },
+        {
+          "symbol": "qmp_put",
+          "crc": "0x2333aed6"
+        },
+        {
+          "symbol": "qmp_get",
+          "crc": "0x056adacb"
+        },
+        {
+          "symbol": "cmd_db_read_aux_data",
+          "crc": "0xf0b2419f"
+        },
+        {
+          "symbol": "idr_for_each",
+          "crc": "0x8426f15b"
+        },
+        {
+          "symbol": "completion_done",
+          "crc": "0xddf6ad7a"
+        },
+        {
+          "symbol": "dma_fence_release",
+          "crc": "0xe123f3d9"
+        },
+        {
+          "symbol": "sched_clock",
+          "crc": "0xe94986d6"
+        },
+        {
+          "symbol": "ktime_get_real_ts64",
+          "crc": "0x9ec6ca96"
+        },
+        {
+          "symbol": "sysfs_remove_files",
+          "crc": "0xbb330694"
+        },
+        {
+          "symbol": "ktime_get_raw",
+          "crc": "0x9714e0bb"
+        },
+        {
+          "symbol": "strlen",
+          "crc": "0x98cf60b3"
+        },
+        {
+          "symbol": "system_unbound_wq",
+          "crc": "0xd4c14632"
+        },
+        {
+          "symbol": "qcom_dcvs_update_votes",
+          "crc": "0x828e28c7"
+        },
+        {
+          "symbol": "init_uts_ns",
+          "crc": "0x650eee35"
+        },
+        {
+          "symbol": "ktime_get_real_seconds",
+          "crc": "0x953e1b9e"
+        },
+        {
+          "symbol": "clk_get_rate",
+          "crc": "0x556e4390"
+        },
+        {
+          "symbol": "__memcpy_fromio",
+          "crc": "0x5d112304"
+        },
+        {
+          "symbol": "kobject_uevent",
+          "crc": "0xbfbb5a92"
+        },
+        {
+          "symbol": "sysfs_create_file_ns",
+          "crc": "0x1a5651b3"
+        },
+        {
+          "symbol": "qcom_scm_kgsl_dcvs_tuning",
+          "crc": "0x422dfac6"
+        },
+        {
+          "symbol": "msm_adreno_tz_set_dcvs_boost",
+          "crc": "0x9dd9c593"
+        },
+        {
+          "symbol": "device_show_int",
+          "crc": "0xb806af71"
+        },
+        {
+          "symbol": "device_store_int",
+          "crc": "0xb79d861f"
+        },
+        {
+          "symbol": "trace_event_buffer_reserve",
+          "crc": "0x7adce031"
+        },
+        {
+          "symbol": "trace_event_buffer_commit",
+          "crc": "0x2a1f1757"
+        },
+        {
+          "symbol": "__trace_trigger_soft_disabled",
+          "crc": "0xd60ef8e6"
+        },
+        {
+          "symbol": "perf_trace_buf_alloc",
+          "crc": "0x2d2c902f"
+        },
+        {
+          "symbol": "perf_trace_run_bpf_submit",
+          "crc": "0xb35e9230"
+        },
+        {
+          "symbol": "strcpy",
+          "crc": "0xe914e41e"
+        },
+        {
+          "symbol": "bpf_trace_run2",
+          "crc": "0x796741f7"
+        },
+        {
+          "symbol": "bpf_trace_run5",
+          "crc": "0x0d7d55b6"
+        },
+        {
+          "symbol": "bpf_trace_run3",
+          "crc": "0x5126ee93"
+        },
+        {
+          "symbol": "bpf_trace_run4",
+          "crc": "0x2741938c"
+        },
+        {
+          "symbol": "bpf_trace_run6",
+          "crc": "0xea6ba00b"
+        },
+        {
+          "symbol": "bpf_trace_run1",
+          "crc": "0x10919295"
+        },
+        {
+          "symbol": "bpf_trace_run10",
+          "crc": "0x23807c0c"
+        },
+        {
+          "symbol": "trace_raw_output_prep",
+          "crc": "0xe3e03e34"
+        },
+        {
+          "symbol": "trace_print_flags_seq",
+          "crc": "0x99078b39"
+        },
+        {
+          "symbol": "trace_event_printf",
+          "crc": "0x1e64c7b6"
+        },
+        {
+          "symbol": "trace_handle_return",
+          "crc": "0x7381287f"
+        },
+        {
+          "symbol": "trace_print_symbols_seq",
+          "crc": "0xcc5c2df4"
+        },
+        {
+          "symbol": "trace_event_reg",
+          "crc": "0x4a2edd71"
+        },
+        {
+          "symbol": "trace_event_raw_init",
+          "crc": "0xf5caeb1b"
+        },
+        {
+          "symbol": "idr_remove",
+          "crc": "0x841a578a"
+        },
+        {
+          "symbol": "put_pid",
+          "crc": "0xc8ce1450"
+        },
+        {
+          "symbol": "idr_destroy",
+          "crc": "0x2e526de0"
+        },
+        {
+          "symbol": "idr_preload",
+          "crc": "0x954f099c"
+        },
+        {
+          "symbol": "idr_alloc",
+          "crc": "0xb62587b5"
+        },
+        {
+          "symbol": "srcu_notifier_chain_register",
+          "crc": "0x68bb2c4c"
+        },
+        {
+          "symbol": "srcu_notifier_chain_unregister",
+          "crc": "0x5ee061b5"
+        },
+        {
+          "symbol": "check_zeroed_user",
+          "crc": "0x3ff94393"
+        },
+        {
+          "symbol": "idr_replace",
+          "crc": "0xdcfcce29"
+        },
+        {
+          "symbol": "dma_buf_get",
+          "crc": "0xf235a8dc"
+        },
+        {
+          "symbol": "dma_buf_put",
+          "crc": "0x5e9801c8"
+        },
+        {
+          "symbol": "sort",
+          "crc": "0xb7c0f443"
+        },
+        {
+          "symbol": "_ctype",
+          "crc": "0x11089ac7"
+        },
+        {
+          "symbol": "platform_get_irq_byname",
+          "crc": "0x10fd3fdc"
+        },
+        {
+          "symbol": "devm_request_threaded_irq",
+          "crc": "0x0e3625e2"
+        },
+        {
+          "symbol": "platform_get_irq_byname_optional",
+          "crc": "0xb7dc755d"
+        },
+        {
+          "symbol": "device_create",
+          "crc": "0xbeca914b"
+        },
+        {
+          "symbol": "kernel_kobj",
+          "crc": "0x47f1766b"
+        },
+        {
+          "symbol": "device_destroy",
+          "crc": "0x26824530"
+        },
+        {
+          "symbol": "destroy_workqueue",
+          "crc": "0x8c03d20c"
+        },
+        {
+          "symbol": "device_unregister",
+          "crc": "0x7707a9dc"
+        },
+        {
+          "symbol": "class_destroy",
+          "crc": "0xa9bff1c6"
+        },
+        {
+          "symbol": "unregister_chrdev_region",
+          "crc": "0x6091b333"
+        },
+        {
+          "symbol": "sysstats_unregister_kgsl_stats_cb",
+          "crc": "0x94b1a785"
+        },
+        {
+          "symbol": "unregister_mtrack_debugger",
+          "crc": "0x36c9a66f"
+        },
+        {
+          "symbol": "unregister_mtrack_procfs",
+          "crc": "0x8d1d0e60"
+        },
+        {
+          "symbol": "alloc_chrdev_region",
+          "crc": "0xe3ec2f2b"
+        },
+        {
+          "symbol": "cdev_init",
+          "crc": "0x9089cd36"
+        },
+        {
+          "symbol": "cdev_add",
+          "crc": "0xe0da49dc"
+        },
+        {
+          "symbol": "class_create",
+          "crc": "0x126112c8"
+        },
+        {
+          "symbol": "dev_set_name",
+          "crc": "0x4cdd8744"
+        },
+        {
+          "symbol": "device_register",
+          "crc": "0xcc790526"
+        },
+        {
+          "symbol": "kobject_create_and_add",
+          "crc": "0x270c763e"
+        },
+        {
+          "symbol": "alloc_workqueue",
+          "crc": "0x49cd25ed"
+        },
+        {
+          "symbol": "put_device",
+          "crc": "0x753efb34"
+        },
+        {
+          "symbol": "kmalloc_large",
+          "crc": "0x9ed12e20"
+        },
+        {
+          "symbol": "sysstats_register_kgsl_stats_cb",
+          "crc": "0x54efb373"
+        },
+        {
+          "symbol": "register_mtrack_debugger",
+          "crc": "0x364e7f26"
+        },
+        {
+          "symbol": "register_mtrack_procfs",
+          "crc": "0xa36e8d4e"
+        },
+        {
+          "symbol": "__tracepoint_mmap_lock_start_locking",
+          "crc": "0x2eefea83"
+        },
+        {
+          "symbol": "down_read",
+          "crc": "0x3355da1c"
+        },
+        {
+          "symbol": "__tracepoint_mmap_lock_acquire_returned",
+          "crc": "0x710039b1"
+        },
+        {
+          "symbol": "find_vma",
+          "crc": "0x4e775369"
+        },
+        {
+          "symbol": "__tracepoint_mmap_lock_released",
+          "crc": "0x2ae025cb"
+        },
+        {
+          "symbol": "up_read",
+          "crc": "0x6b50e951"
+        },
+        {
+          "symbol": "get_user_pages",
+          "crc": "0x0644bfd6"
+        },
+        {
+          "symbol": "sg_alloc_table_from_pages_segment",
+          "crc": "0xb19b1cf5"
+        },
+        {
+          "symbol": "page_pinner_inited",
+          "crc": "0xacfe4142"
+        },
+        {
+          "symbol": "__folio_put",
+          "crc": "0x3ed22562"
+        },
+        {
+          "symbol": "__page_pinner_put_page",
+          "crc": "0xffe585a7"
+        },
+        {
+          "symbol": "__mmap_lock_do_trace_start_locking",
+          "crc": "0xa269a4fe"
+        },
+        {
+          "symbol": "__mmap_lock_do_trace_acquire_returned",
+          "crc": "0x29dfc0f2"
+        },
+        {
+          "symbol": "__mmap_lock_do_trace_released",
+          "crc": "0x52a9c24e"
+        },
+        {
+          "symbol": "sg_next",
+          "crc": "0xfbe215e4"
+        },
+        {
+          "symbol": "set_page_dirty_lock",
+          "crc": "0x694ec9f9"
+        },
+        {
+          "symbol": "dma_buf_attach",
+          "crc": "0x6dbc4f7f"
+        },
+        {
+          "symbol": "dma_buf_map_attachment_unlocked",
+          "crc": "0x5702fca5"
+        },
+        {
+          "symbol": "mem_buf_dma_buf_copy_vmperm",
+          "crc": "0xd9c859c2"
+        },
+        {
+          "symbol": "dma_buf_unmap_attachment_unlocked",
+          "crc": "0xa9d84ecb"
+        },
+        {
+          "symbol": "dma_buf_detach",
+          "crc": "0xf4c88ea8"
+        },
+        {
+          "symbol": "mem_buf_dma_buf_exclusive_owner",
+          "crc": "0x12b2ee2d"
+        },
+        {
+          "symbol": "__tracepoint_gpu_mem_total",
+          "crc": "0xc0b37761"
+        },
+        {
+          "symbol": "__traceiter_gpu_mem_total",
+          "crc": "0x448af6f4"
+        },
+        {
+          "symbol": "down_write",
+          "crc": "0x28ed2847"
+        },
+        {
+          "symbol": "up_write",
+          "crc": "0x20d81059"
+        },
+        {
+          "symbol": "vm_insert_page",
+          "crc": "0x830a07d7"
+        },
+        {
+          "symbol": "fput",
+          "crc": "0x46599f31"
+        },
+        {
+          "symbol": "__pm_runtime_resume",
+          "crc": "0x4d64bd53"
+        },
+        {
+          "symbol": "__pm_runtime_idle",
+          "crc": "0xf8c17694"
+        },
+        {
+          "symbol": "get_unmapped_area",
+          "crc": "0xadd25879"
+        },
+        {
+          "symbol": "get_task_pid",
+          "crc": "0x38d8bb0c"
+        },
+        {
+          "symbol": "__get_task_comm",
+          "crc": "0xeac24d96"
+        },
+        {
+          "symbol": "kstrdup_quotable_cmdline",
+          "crc": "0x05348006"
+        },
+        {
+          "symbol": "find_vma_intersection",
+          "crc": "0x552fbcfe"
+        },
+        {
+          "symbol": "single_open",
+          "crc": "0x02c47934"
+        },
+        {
+          "symbol": "seq_printf",
+          "crc": "0x52f30ff5"
+        },
+        {
+          "symbol": "seq_read",
+          "crc": "0xace43a6c"
+        },
+        {
+          "symbol": "seq_lseek",
+          "crc": "0x0200073c"
+        },
+        {
+          "symbol": "single_release",
+          "crc": "0x3d1d73f3"
+        },
+        {
+          "symbol": "icc_set_tag",
+          "crc": "0x27eaa7a4"
+        },
+        {
+          "symbol": "of_property_count_elems_of_size",
+          "crc": "0x066a1550"
+        },
+        {
+          "symbol": "of_icc_get",
+          "crc": "0xb1cf4f18"
+        },
+        {
+          "symbol": "icc_put",
+          "crc": "0xc3da920e"
+        },
+        {
+          "symbol": "dma_fence_add_callback",
+          "crc": "0x628c0f8f"
+        },
+        {
+          "symbol": "dma_fence_signal",
+          "crc": "0xaacf03c1"
+        },
+        {
+          "symbol": "dma_fence_remove_callback",
+          "crc": "0x70daa11e"
+        },
+        {
+          "symbol": "dma_fence_array_ops",
+          "crc": "0x8a833583"
+        },
+        {
+          "symbol": "vsnprintf",
+          "crc": "0x00148653"
+        },
+        {
+          "symbol": "seq_puts",
+          "crc": "0x5389b175"
+        },
+        {
+          "symbol": "memstart_addr",
+          "crc": "0x9688de8b"
+        },
+        {
+          "symbol": "kimage_voffset",
+          "crc": "0xe4bbc1dd"
+        },
+        {
+          "symbol": "platform_bus_type",
+          "crc": "0x0740a594"
+        },
+        {
+          "symbol": "iommu_domain_alloc",
+          "crc": "0x67098835"
+        },
+        {
+          "symbol": "qcom_iommu_set_fault_model",
+          "crc": "0x9f1f8742"
+        },
+        {
+          "symbol": "iommu_attach_device",
+          "crc": "0x6af5d705"
+        },
+        {
+          "symbol": "iommu_set_fault_handler",
+          "crc": "0x525d1c80"
+        },
+        {
+          "symbol": "rproc_get_by_phandle",
+          "crc": "0xb9f04906"
+        },
+        {
+          "symbol": "rproc_set_state",
+          "crc": "0xd0bbef54"
+        },
+        {
+          "symbol": "sysfs_remove_group",
+          "crc": "0x3ff466d3"
+        },
+        {
+          "symbol": "sysfs_create_group",
+          "crc": "0x31b8c566"
+        },
+        {
+          "symbol": "iommu_map_sg",
+          "crc": "0xc1483571"
+        },
+        {
+          "symbol": "of_platform_populate",
+          "crc": "0x9a598e50"
+        },
+        {
+          "symbol": "of_platform_depopulate",
+          "crc": "0xd19f1870"
+        },
+        {
+          "symbol": "clk_round_rate",
+          "crc": "0x43f81957"
+        },
+        {
+          "symbol": "regulator_disable",
+          "crc": "0x46c24e40"
+        },
+        {
+          "symbol": "regulator_enable",
+          "crc": "0xc552b701"
+        },
+        {
+          "symbol": "qcom_clk_dump",
+          "crc": "0xa9a939b7"
+        },
+        {
+          "symbol": "dev_pm_domain_detach",
+          "crc": "0xa6ad3e14"
+        },
+        {
+          "symbol": "dev_pm_domain_attach_by_name",
+          "crc": "0xe6ff7a1b"
+        },
+        {
+          "symbol": "devm_regulator_get",
+          "crc": "0x27936302"
+        },
+        {
+          "symbol": "disable_irq_nosync",
+          "crc": "0x27bbf221"
+        },
+        {
+          "symbol": "of_prop_next_string",
+          "crc": "0x0fc858e4"
+        },
+        {
+          "symbol": "devm_clk_get",
+          "crc": "0x454d3026"
+        },
+        {
+          "symbol": "of_property_match_string",
+          "crc": "0xe2c1aa43"
+        },
+        {
+          "symbol": "devm_regulator_register_notifier",
+          "crc": "0xd2edbe3f"
+        },
+        {
+          "symbol": "dev_pm_genpd_add_notifier",
+          "crc": "0x96f9cd5d"
+        },
+        {
+          "symbol": "dev_pm_qos_add_request",
+          "crc": "0xf32e2f6b"
+        },
+        {
+          "symbol": "dev_pm_qos_add_notifier",
+          "crc": "0x484762c7"
+        },
+        {
+          "symbol": "thermal_of_cooling_device_register",
+          "crc": "0x51fc02ba"
+        },
+        {
+          "symbol": "pm_runtime_enable",
+          "crc": "0xd79a9125"
+        },
+        {
+          "symbol": "dev_pm_qos_remove_request",
+          "crc": "0xda71cd0c"
+        },
+        {
+          "symbol": "dev_pm_qos_remove_notifier",
+          "crc": "0xfdbfb361"
+        },
+        {
+          "symbol": "thermal_cooling_device_unregister",
+          "crc": "0xbe5326fe"
+        },
+        {
+          "symbol": "__pm_runtime_disable",
+          "crc": "0xddf61fed"
+        },
+        {
+          "symbol": "dev_pm_genpd_remove_notifier",
+          "crc": "0x9042bd38"
+        },
+        {
+          "symbol": "dev_pm_qos_update_request",
+          "crc": "0x2edc09ce"
+        },
+        {
+          "symbol": "jiffies_to_usecs",
+          "crc": "0x7f24de73"
+        },
+        {
+          "symbol": "thermal_zone_get_zone_by_name",
+          "crc": "0xccee6a75"
+        },
+        {
+          "symbol": "thermal_zone_get_temp",
+          "crc": "0x66965ffb"
+        },
+        {
+          "symbol": "devfreq_add_device",
+          "crc": "0x4f087883"
+        },
+        {
+          "symbol": "sysfs_create_link",
+          "crc": "0xd1cb1bcf"
+        },
+        {
+          "symbol": "dev_pm_opp_remove_all_dynamic",
+          "crc": "0x1b891121"
+        },
+        {
+          "symbol": "devfreq_suspend_device",
+          "crc": "0x94308a15"
+        },
+        {
+          "symbol": "devfreq_resume_device",
+          "crc": "0xf45620a5"
+        },
+        {
+          "symbol": "update_devfreq",
+          "crc": "0x26d20d22"
+        },
+        {
+          "symbol": "devfreq_remove_device",
+          "crc": "0xacd26b61"
+        },
+        {
+          "symbol": "hyp_assign_table",
+          "crc": "0x86827bc5"
+        },
+        {
+          "symbol": "__sg_page_iter_start",
+          "crc": "0x0562dc30"
+        },
+        {
+          "symbol": "__sg_page_iter_next",
+          "crc": "0x7ef4bddc"
+        },
+        {
+          "symbol": "sg_init_table",
+          "crc": "0x2cf0c910"
+        },
+        {
+          "symbol": "dma_sync_sg_for_device",
+          "crc": "0xadb4f853"
+        },
+        {
+          "symbol": "dma_sync_sg_for_cpu",
+          "crc": "0x6252cf1b"
+        },
+        {
+          "symbol": "sg_alloc_table",
+          "crc": "0xb3f985a8"
+        },
+        {
+          "symbol": "kasan_flag_enabled",
+          "crc": "0xa6f6226c"
+        },
+        {
+          "symbol": "clear_page",
+          "crc": "0x3d9ee9f0"
+        },
+        {
+          "symbol": "__free_pages",
+          "crc": "0x2b36c64e"
+        },
+        {
+          "symbol": "__alloc_pages",
+          "crc": "0x61efa00f"
+        },
+        {
+          "symbol": "dma_alloc_attrs",
+          "crc": "0x1688bf2b"
+        },
+        {
+          "symbol": "dma_free_attrs",
+          "crc": "0x2ed993bc"
+        },
+        {
+          "symbol": "vmf_insert_pfn",
+          "crc": "0xbd0c670d"
+        },
+        {
+          "symbol": "shmem_read_mapping_page_gfp",
+          "crc": "0x80f8272e"
+        },
+        {
+          "symbol": "vunmap",
+          "crc": "0x94961283"
+        },
+        {
+          "symbol": "vmap",
+          "crc": "0x1d23a455"
+        },
+        {
+          "symbol": "getboottime64",
+          "crc": "0xef464c28"
+        },
+        {
+          "symbol": "sysfs_notify",
+          "crc": "0x37ae43ba"
+        },
+        {
+          "symbol": "sysfs_create_bin_file",
+          "crc": "0x1dfc8799"
+        },
+        {
+          "symbol": "panic_notifier_list",
+          "crc": "0xe27121cb"
+        },
+        {
+          "symbol": "atomic_notifier_chain_register",
+          "crc": "0x83b96232"
+        },
+        {
+          "symbol": "atomic_notifier_chain_unregister",
+          "crc": "0xc866487b"
+        },
+        {
+          "symbol": "sysfs_remove_bin_file",
+          "crc": "0x5310f88e"
+        },
+        {
+          "symbol": "wait_for_completion_interruptible",
+          "crc": "0x2e3bcce2"
+        },
+        {
+          "symbol": "dma_fence_context_alloc",
+          "crc": "0x14605535"
+        },
+        {
+          "symbol": "dma_fence_array_create",
+          "crc": "0xe467212b"
+        },
+        {
+          "symbol": "dma_fence_init",
+          "crc": "0xdeb99119"
+        },
+        {
+          "symbol": "_raw_spin_lock_irq",
+          "crc": "0x8427cc7b"
+        },
+        {
+          "symbol": "_raw_spin_unlock_irq",
+          "crc": "0x4b750f53"
+        },
+        {
+          "symbol": "dma_fence_wait_timeout",
+          "crc": "0x64d11af1"
+        },
+        {
+          "symbol": "get_unused_fd_flags",
+          "crc": "0xa843805a"
+        },
+        {
+          "symbol": "sync_file_create",
+          "crc": "0xf6602598"
+        },
+        {
+          "symbol": "fd_install",
+          "crc": "0xa525f622"
+        },
+        {
+          "symbol": "put_unused_fd",
+          "crc": "0x3f4547a7"
+        },
+        {
+          "symbol": "dma_fence_free",
+          "crc": "0xbbda18c4"
+        },
+        {
+          "symbol": "bpf_trace_run7",
+          "crc": "0xa047cd65"
+        },
+        {
+          "symbol": "regulator_set_voltage",
+          "crc": "0x6854bf5a"
+        },
+        {
+          "symbol": "qcom_scm_kgsl_init_regs",
+          "crc": "0x3df86cc8"
+        },
+        {
+          "symbol": "of_get_child_by_name",
+          "crc": "0xb61dc095"
+        },
+        {
+          "symbol": "__of_parse_phandle_with_args",
+          "crc": "0x86450697"
+        },
+        {
+          "symbol": "of_address_to_resource",
+          "crc": "0x8882e1cc"
+        },
+        {
+          "symbol": "qcom_mdt_get_size",
+          "crc": "0xe8a3861c"
+        },
+        {
+          "symbol": "memremap",
+          "crc": "0x4d924f20"
+        },
+        {
+          "symbol": "qcom_mdt_load",
+          "crc": "0xe72cce47"
+        },
+        {
+          "symbol": "qcom_scm_pas_auth_and_reset",
+          "crc": "0xdd7e3192"
+        },
+        {
+          "symbol": "memunmap",
+          "crc": "0x9e9fdd9d"
+        },
+        {
+          "symbol": "qcom_scm_pas_shutdown_retry",
+          "crc": "0xc1538ee3"
+        },
+        {
+          "symbol": "msm_minidump_enabled",
+          "crc": "0x584e21a2"
+        },
+        {
+          "symbol": "msm_minidump_add_region",
+          "crc": "0xbc932109"
+        },
+        {
+          "symbol": "msm_minidump_remove_region",
+          "crc": "0x217532ad"
+        },
+        {
+          "symbol": "qcom_va_md_add_region",
+          "crc": "0x0fc85ce1"
+        },
+        {
+          "symbol": "qcom_va_md_enabled",
+          "crc": "0x36f97954"
+        },
+        {
+          "symbol": "qcom_va_md_register",
+          "crc": "0x7c62ee4d"
+        },
+        {
+          "symbol": "qcom_va_md_unregister",
+          "crc": "0xb9ef4737"
+        },
+        {
+          "symbol": "interval_tree_iter_first",
+          "crc": "0xa44a1307"
+        },
+        {
+          "symbol": "interval_tree_iter_next",
+          "crc": "0xd96babb4"
+        },
+        {
+          "symbol": "interval_tree_insert",
+          "crc": "0xdab5a1eb"
+        },
+        {
+          "symbol": "interval_tree_remove",
+          "crc": "0x09b53e14"
+        },
+        {
+          "symbol": "debugfs_create_dir",
+          "crc": "0x1f1faaa1"
+        },
+        {
+          "symbol": "debugfs_create_bool",
+          "crc": "0x0d462452"
+        },
+        {
+          "symbol": "seq_open",
+          "crc": "0xf9a0595e"
+        },
+        {
+          "symbol": "seq_release",
+          "crc": "0xc8b58206"
+        },
+        {
+          "symbol": "seq_putc",
+          "crc": "0xeeb00d41"
+        },
+        {
+          "symbol": "debugfs_lookup",
+          "crc": "0x6db0290b"
+        },
+        {
+          "symbol": "kstrtoull",
+          "crc": "0x5c3c7387"
+        },
+        {
+          "symbol": "coresight_unregister",
+          "crc": "0x605a3783"
+        },
+        {
+          "symbol": "of_find_compatible_node",
+          "crc": "0x21e562ca"
+        },
+        {
+          "symbol": "of_find_device_by_node",
+          "crc": "0xaf6cf70c"
+        },
+        {
+          "symbol": "coresight_get_platform_data",
+          "crc": "0x133fb191"
+        },
+        {
+          "symbol": "platform_device_put",
+          "crc": "0xeb552e65"
+        },
+        {
+          "symbol": "coresight_register",
+          "crc": "0x61799d18"
+        },
+        {
+          "symbol": "amba_bustype",
+          "crc": "0x0cf71522"
+        },
+        {
+          "symbol": "device_match_name",
+          "crc": "0x2794dcc7"
+        },
+        {
+          "symbol": "bus_find_device",
+          "crc": "0x366d1cdb"
+        },
+        {
+          "symbol": "device_find_child",
+          "crc": "0x8a40a67a"
+        },
+        {
+          "symbol": "sysfs_remove_groups",
+          "crc": "0x858774a7"
+        },
+        {
+          "symbol": "mempool_free",
+          "crc": "0xa897e3e7"
+        },
+        {
+          "symbol": "contig_page_data",
+          "crc": "0x936dda11"
+        },
+        {
+          "symbol": "mod_node_page_state",
+          "crc": "0x3908cad9"
+        },
+        {
+          "symbol": "mempool_alloc",
+          "crc": "0xc3762aec"
+        },
+        {
+          "symbol": "mempool_create",
+          "crc": "0x1953c958"
+        },
+        {
+          "symbol": "register_shrinker",
+          "crc": "0x97c3f68b"
+        },
+        {
+          "symbol": "unregister_shrinker",
+          "crc": "0x6d6e6e1f"
+        },
+        {
+          "symbol": "mempool_destroy",
+          "crc": "0x9034a696"
+        },
+        {
+          "symbol": "synx_initialize",
+          "crc": "0x957d4ae7"
+        },
+        {
+          "symbol": "synx_uninitialize",
+          "crc": "0xf1196b0e"
+        },
+        {
+          "symbol": "synx_create",
+          "crc": "0xda5882ca"
+        },
+        {
+          "symbol": "synx_import",
+          "crc": "0xd79173ad"
+        },
+        {
+          "symbol": "synx_release",
+          "crc": "0xe083824d"
+        },
+        {
+          "symbol": "synx_signal",
+          "crc": "0xa52791cf"
+        },
+        {
+          "symbol": "sync_file_get_fence",
+          "crc": "0x7155bcf8"
+        },
+        {
+          "symbol": "dma_fence_default_wait",
+          "crc": "0x197d5b60"
+        },
+        {
+          "symbol": "qcom_scm_kgsl_set_smmu_aperture",
+          "crc": "0x61b3c1c3"
+        },
+        {
+          "symbol": "qcom_scm_kgsl_set_smmu_lpac_aperture",
+          "crc": "0x63d450ba"
+        },
+        {
+          "symbol": "device_link_add",
+          "crc": "0x767341ae"
+        },
+        {
+          "symbol": "qcom_alloc_io_pgtable_ops",
+          "crc": "0xcc72e9d1"
+        },
+        {
+          "symbol": "of_dma_configure_id",
+          "crc": "0xa9413665"
+        },
+        {
+          "symbol": "qcom_iommu_set_secure_vmid",
+          "crc": "0x67d7792b"
+        },
+        {
+          "symbol": "iommu_set_pgtable_quirks",
+          "crc": "0x9288050d"
+        },
+        {
+          "symbol": "qcom_iommu_get_context_bank_nr",
+          "crc": "0xb705a0a9"
+        },
+        {
+          "symbol": "qcom_iommu_get_asid_nr",
+          "crc": "0x776ddc70"
+        },
+        {
+          "symbol": "rb_prev",
+          "crc": "0xf82ec573"
+        },
+        {
+          "symbol": "qcom_arm_lpae_unmap_pages",
+          "crc": "0xf054aa39"
+        },
+        {
+          "symbol": "qcom_free_io_pgtable_ops",
+          "crc": "0x329b88d2"
+        },
+        {
+          "symbol": "iommu_map",
+          "crc": "0x39d3fd0e"
+        },
+        {
+          "symbol": "qcom_arm_lpae_map_sg",
+          "crc": "0x1f23e80a"
+        },
+        {
+          "symbol": "get_random_u32",
+          "crc": "0xd36dc10c"
+        },
+        {
+          "symbol": "bitmap_find_next_zero_area_off",
+          "crc": "0x64127b67"
+        },
+        {
+          "symbol": "__bitmap_set",
+          "crc": "0x615911d7"
+        },
+        {
+          "symbol": "qcom_skip_tlb_management",
+          "crc": "0xc9440af1"
+        },
+        {
+          "symbol": "rb_last",
+          "crc": "0xdf2c2742"
+        },
+        {
+          "symbol": "module_layout",
+          "crc": "0x4e276f37"
+        }
+      ]
+    },
+    {
+      "filename": "oplus_bsp_sched_ext.ko",
+      "sha256": "889171db4de5413ddab4722142add5bc64f3a9d34b00003e99ce49cf94f9b688",
+      "vermagic": "6.6.118-android15-8-o-4k SMP preempt mod_unload modversions aarch64",
+      "imports": [
+        {
+          "symbol": "of_find_node_opts_by_path",
+          "crc": "0x7c497915"
+        },
+        {
+          "symbol": "of_property_read_string",
+          "crc": "0xd2555b9d"
+        },
+        {
+          "symbol": "strncmp",
+          "crc": "0x5a921311"
+        },
+        {
+          "symbol": "__stack_chk_fail",
+          "crc": "0xf0fdf6cb"
+        },
+        {
+          "symbol": "cpu_number",
+          "crc": "0xf8b9acd3"
+        },
+        {
+          "symbol": "__cpu_online_mask",
+          "crc": "0xac594e02"
+        },
+        {
+          "symbol": "irq_work_queue",
+          "crc": "0x4cc51d38"
+        },
+        {
+          "symbol": "irq_work_queue_on",
+          "crc": "0x222d76da"
+        },
+        {
+          "symbol": "_raw_spin_lock_irqsave",
+          "crc": "0x34db050b"
+        },
+        {
+          "symbol": "cpufreq_driver_resolve_freq",
+          "crc": "0xf3f14d1b"
+        },
+        {
+          "symbol": "__trace_bprintk",
+          "crc": "0xa20d01ba"
+        },
+        {
+          "symbol": "cpufreq_driver_fast_switch",
+          "crc": "0x59ee7839"
+        },
+        {
+          "symbol": "kthread_queue_work",
+          "crc": "0x7fd30187"
+        },
+        {
+          "symbol": "_raw_spin_unlock_irqrestore",
+          "crc": "0xd35cce70"
+        },
+        {
+          "symbol": "sched_ravg_window",
+          "crc": "0x75071d3a"
+        },
+        {
+          "symbol": "__per_cpu_offset",
+          "crc": "0x280f9f14"
+        },
+        {
+          "symbol": "cpu_scale",
+          "crc": "0x54552241"
+        },
+        {
+          "symbol": "cpufreq_cpu_get",
+          "crc": "0x72c90142"
+        },
+        {
+          "symbol": "strlen",
+          "crc": "0x98cf60b3"
+        },
+        {
+          "symbol": "kstrtouint",
+          "crc": "0x3b6c41ea"
+        },
+        {
+          "symbol": "__sw_hweight64",
+          "crc": "0x9f46ced8"
+        },
+        {
+          "symbol": "nr_cpu_ids",
+          "crc": "0x017de3d5"
+        },
+        {
+          "symbol": "cpu_topology",
+          "crc": "0xe4bc4b09"
+        },
+        {
+          "symbol": "cpufreq_cpu_get_raw",
+          "crc": "0xb97fcefe"
+        },
+        {
+          "symbol": "__rcu_read_lock",
+          "crc": "0x8d522714"
+        },
+        {
+          "symbol": "__rcu_read_unlock",
+          "crc": "0x2469810f"
+        },
+        {
+          "symbol": "walt_rq",
+          "crc": "0xaf4e0da5"
+        },
+        {
+          "symbol": "_printk",
+          "crc": "0x92997ed8"
+        },
+        {
+          "symbol": "cpufreq_enable_fast_switch",
+          "crc": "0x57e786b0"
+        },
+        {
+          "symbol": "kmalloc_caches",
+          "crc": "0x74661383"
+        },
+        {
+          "symbol": "kmalloc_trace",
+          "crc": "0xa8541c9b"
+        },
+        {
+          "symbol": "__kthread_init_worker",
+          "crc": "0x561aebf5"
+        },
+        {
+          "symbol": "kthread_worker_fn",
+          "crc": "0x955b0e2e"
+        },
+        {
+          "symbol": "kthread_create_on_node",
+          "crc": "0x8b146f69"
+        },
+        {
+          "symbol": "sched_setattr_nocheck",
+          "crc": "0x03358959"
+        },
+        {
+          "symbol": "kthread_bind_mask",
+          "crc": "0xe25c2556"
+        },
+        {
+          "symbol": "__mutex_init",
+          "crc": "0xa571f6b0"
+        },
+        {
+          "symbol": "wake_up_process",
+          "crc": "0xa9b03a93"
+        },
+        {
+          "symbol": "mutex_lock",
+          "crc": "0xd5977bfb"
+        },
+        {
+          "symbol": "have_governor_per_policy",
+          "crc": "0x47aad3b9"
+        },
+        {
+          "symbol": "gov_attr_set_get",
+          "crc": "0xfa5bbea6"
+        },
+        {
+          "symbol": "gov_attr_set_init",
+          "crc": "0x429c318d"
+        },
+        {
+          "symbol": "get_governor_parent_kobj",
+          "crc": "0x556100b3"
+        },
+        {
+          "symbol": "kobject_init_and_add",
+          "crc": "0x15fd77ac"
+        },
+        {
+          "symbol": "mutex_unlock",
+          "crc": "0xed55cabd"
+        },
+        {
+          "symbol": "kthread_stop",
+          "crc": "0xd2ef8b35"
+        },
+        {
+          "symbol": "kobject_put",
+          "crc": "0x0e5ae00d"
+        },
+        {
+          "symbol": "kfree",
+          "crc": "0x037a0cba"
+        },
+        {
+          "symbol": "cpufreq_disable_fast_switch",
+          "crc": "0x077fc653"
+        },
+        {
+          "symbol": "gov_attr_set_put",
+          "crc": "0x6a934bb6"
+        },
+        {
+          "symbol": "kthread_flush_worker",
+          "crc": "0xde48ab31"
+        },
+        {
+          "symbol": "waltgov_cb_data",
+          "crc": "0xe4663148"
+        },
+        {
+          "symbol": "irq_work_sync",
+          "crc": "0x117b4830"
+        },
+        {
+          "symbol": "kthread_cancel_work_sync",
+          "crc": "0x32ccd001"
+        },
+        {
+          "symbol": "synchronize_rcu",
+          "crc": "0x6091797f"
+        },
+        {
+          "symbol": "ktime_get",
+          "crc": "0xb43f9365"
+        },
+        {
+          "symbol": "__cpufreq_driver_target",
+          "crc": "0x9e495a52"
+        },
+        {
+          "symbol": "register_sysctl_sz",
+          "crc": "0x21f93669"
+        },
+        {
+          "symbol": "cpufreq_register_governor",
+          "crc": "0xd1ab2478"
+        },
+        {
+          "symbol": "__cpu_possible_mask",
+          "crc": "0xde7ece30"
+        },
+        {
+          "symbol": "alt_cb_patch_nops",
+          "crc": "0xa65c6def"
+        },
+        {
+          "symbol": "__list_add_valid_or_report",
+          "crc": "0x7e19152a"
+        },
+        {
+          "symbol": "cpufreq_unregister_governor",
+          "crc": "0x6d756697"
+        },
+        {
+          "symbol": "__list_del_entry_valid_or_report",
+          "crc": "0x9a835040"
+        },
+        {
+          "symbol": "sprintf",
+          "crc": "0x3c3ff9fd"
+        },
+        {
+          "symbol": "kstrtoint",
+          "crc": "0x8c8569cb"
+        },
+        {
+          "symbol": "proc_dointvec",
+          "crc": "0xf94536c2"
+        },
+        {
+          "symbol": "governor_sysfs_ops",
+          "crc": "0xf4540512"
+        },
+        {
+          "symbol": "runqueues",
+          "crc": "0x6e40dfd2"
+        },
+        {
+          "symbol": "raw_spin_rq_lock_nested",
+          "crc": "0x4b8c4ea1"
+        },
+        {
+          "symbol": "balance_push_callback",
+          "crc": "0x26a9e025"
+        },
+        {
+          "symbol": "update_rq_clock",
+          "crc": "0xeb0fe8d4"
+        },
+        {
+          "symbol": "raw_spin_rq_unlock",
+          "crc": "0x32a34ea8"
+        },
+        {
+          "symbol": "__warn_printk",
+          "crc": "0x56470118"
+        },
+        {
+          "symbol": "hrtimer_init",
+          "crc": "0x33853d50"
+        },
+        {
+          "symbol": "hrtimer_cancel",
+          "crc": "0xbcacfac9"
+        },
+        {
+          "symbol": "preempt_schedule_notrace",
+          "crc": "0xf70e4a4d"
+        },
+        {
+          "symbol": "__tracepoint_android_vh_tick_nohz_idle_stop_tick",
+          "crc": "0x9dcb3dd8"
+        },
+        {
+          "symbol": "tracepoint_probe_register",
+          "crc": "0x805e2dd2"
+        },
+        {
+          "symbol": "__tracepoint_sched_switch",
+          "crc": "0xdfe3cd88"
+        },
+        {
+          "symbol": "__trace_puts",
+          "crc": "0x2d41e6f5"
+        },
+        {
+          "symbol": "sched_setscheduler_nocheck",
+          "crc": "0x99e45d92"
+        },
+        {
+          "symbol": "strcmp",
+          "crc": "0xe2d5255a"
+        },
+        {
+          "symbol": "_printk_deferred",
+          "crc": "0x1e19eb6c"
+        },
+        {
+          "symbol": "resched_curr",
+          "crc": "0xd2e95a18"
+        },
+        {
+          "symbol": "tasklist_lock",
+          "crc": "0x673472ea"
+        },
+        {
+          "symbol": "_raw_read_lock",
+          "crc": "0xfe8c61f0"
+        },
+        {
+          "symbol": "_raw_spin_lock",
+          "crc": "0xba8fbd64"
+        },
+        {
+          "symbol": "pick_migrate_task",
+          "crc": "0x87559548"
+        },
+        {
+          "symbol": "deactivate_task",
+          "crc": "0xc2275ae4"
+        },
+        {
+          "symbol": "init_task",
+          "crc": "0x5e840913"
+        },
+        {
+          "symbol": "activate_task",
+          "crc": "0xe0d71e20"
+        },
+        {
+          "symbol": "_raw_spin_unlock",
+          "crc": "0xb5b54b34"
+        },
+        {
+          "symbol": "_raw_read_unlock",
+          "crc": "0xdd4d55b6"
+        },
+        {
+          "symbol": "snprintf",
+          "crc": "0x656e4a6e"
+        },
+        {
+          "symbol": "g_opt_enable",
+          "crc": "0x3f00a121"
+        },
+        {
+          "symbol": "g_sched_enable",
+          "crc": "0x00235bfc"
+        },
+        {
+          "symbol": "stop_machine",
+          "crc": "0xdfc04014"
+        },
+        {
+          "symbol": "kstrdup",
+          "crc": "0x2d39b0a7"
+        },
+        {
+          "symbol": "strsep",
+          "crc": "0x85df9b6c"
+        },
+        {
+          "symbol": "sscanf",
+          "crc": "0xbcab6ee6"
+        },
+        {
+          "symbol": "proc_dostring",
+          "crc": "0x520e97c4"
+        },
+        {
+          "symbol": "scnprintf",
+          "crc": "0x96848186"
+        },
+        {
+          "symbol": "register_syscore_ops",
+          "crc": "0xb9c425de"
+        },
+        {
+          "symbol": "memset",
+          "crc": "0xdcb764ad"
+        },
+        {
+          "symbol": "root_task_group",
+          "crc": "0x5f160e8f"
+        },
+        {
+          "symbol": "css_next_descendant_pre",
+          "crc": "0xb9b5ee7e"
+        },
+        {
+          "symbol": "sched_clock",
+          "crc": "0xe94986d6"
+        },
+        {
+          "symbol": "proc_dointvec_minmax",
+          "crc": "0x2801a22f"
+        },
+        {
+          "symbol": "sysctl_vals",
+          "crc": "0xc8827b75"
+        },
+        {
+          "symbol": "param_ops_uint",
+          "crc": "0x460da8f5"
+        },
+        {
+          "symbol": "trace_event_buffer_reserve",
+          "crc": "0x7adce031"
+        },
+        {
+          "symbol": "trace_event_buffer_commit",
+          "crc": "0x2a1f1757"
+        },
+        {
+          "symbol": "__trace_trigger_soft_disabled",
+          "crc": "0xd60ef8e6"
+        },
+        {
+          "symbol": "perf_trace_buf_alloc",
+          "crc": "0x2d2c902f"
+        },
+        {
+          "symbol": "perf_trace_run_bpf_submit",
+          "crc": "0xb35e9230"
+        },
+        {
+          "symbol": "__msecs_to_jiffies",
+          "crc": "0x7f02188f"
+        },
+        {
+          "symbol": "jiffies",
+          "crc": "0x15ba50a6"
+        },
+        {
+          "symbol": "bpf_trace_run6",
+          "crc": "0xea6ba00b"
+        },
+        {
+          "symbol": "bpf_trace_run4",
+          "crc": "0x2741938c"
+        },
+        {
+          "symbol": "bpf_trace_run2",
+          "crc": "0x796741f7"
+        },
+        {
+          "symbol": "bpf_trace_run5",
+          "crc": "0x0d7d55b6"
+        },
+        {
+          "symbol": "bpf_trace_run8",
+          "crc": "0x17995035"
+        },
+        {
+          "symbol": "return_address",
+          "crc": "0xb917b6d7"
+        },
+        {
+          "symbol": "rb_insert_color",
+          "crc": "0xa5526619"
+        },
+        {
+          "symbol": "rb_next",
+          "crc": "0xca9360b5"
+        },
+        {
+          "symbol": "rb_erase",
+          "crc": "0x4d9b652b"
+        },
+        {
+          "symbol": "set_next_entity",
+          "crc": "0xd83b29c9"
+        },
+        {
+          "symbol": "double_rq_lock",
+          "crc": "0x8ebf2c86"
+        },
+        {
+          "symbol": "set_task_cpu",
+          "crc": "0x55091bd2"
+        },
+        {
+          "symbol": "__cpu_active_mask",
+          "crc": "0x15db3b99"
+        },
+        {
+          "symbol": "available_idle_cpu",
+          "crc": "0x2088e082"
+        },
+        {
+          "symbol": "sched_feat_keys",
+          "crc": "0xef80ba0e"
+        },
+        {
+          "symbol": "cpupri_find_fitness",
+          "crc": "0x6c1bd1ba"
+        },
+        {
+          "symbol": "uclamp_eff_value",
+          "crc": "0xe355c9a3"
+        },
+        {
+          "symbol": "usleep_range_state",
+          "crc": "0xc3055d20"
+        },
+        {
+          "symbol": "register_scx_sched_gki_ops",
+          "crc": "0x79d4dbee"
+        },
+        {
+          "symbol": "__tracepoint_android_rvh_sched_rebalance_domains",
+          "crc": "0xadf3b1d1"
+        },
+        {
+          "symbol": "android_rvh_probe_register",
+          "crc": "0xc046d25b"
+        },
+        {
+          "symbol": "__tracepoint_sched_stat_runtime",
+          "crc": "0x921c1bd2"
+        },
+        {
+          "symbol": "trace_raw_output_prep",
+          "crc": "0xe3e03e34"
+        },
+        {
+          "symbol": "trace_event_printf",
+          "crc": "0x1e64c7b6"
+        },
+        {
+          "symbol": "trace_handle_return",
+          "crc": "0x7381287f"
+        },
+        {
+          "symbol": "trace_event_reg",
+          "crc": "0x4a2edd71"
+        },
+        {
+          "symbol": "trace_event_raw_init",
+          "crc": "0xf5caeb1b"
+        },
+        {
+          "symbol": "memstart_addr",
+          "crc": "0x9688de8b"
+        },
+        {
+          "symbol": "kimage_voffset",
+          "crc": "0xe4bbc1dd"
+        },
+        {
+          "symbol": "msm_minidump_add_region",
+          "crc": "0xbc932109"
+        },
+        {
+          "symbol": "module_layout",
+          "crc": "0x4e276f37"
+        }
+      ]
+    },
+    {
+      "filename": "oplus_network_sched.ko",
+      "sha256": "c35a4a37c67bd1bd885d0db62edbb3c246c5d83f4a22f294e875e0ac3de25d84",
+      "vermagic": "6.6.118-android15-8-o-4k SMP preempt mod_unload modversions aarch64",
+      "imports": [
+        {
+          "symbol": "_printk",
+          "crc": "0x92997ed8"
+        },
+        {
+          "symbol": "register_qdisc",
+          "crc": "0xe3472da5"
+        },
+        {
+          "symbol": "unregister_qdisc",
+          "crc": "0xa8e4af42"
+        },
+        {
+          "symbol": "tcf_classify",
+          "crc": "0xd905382c"
+        },
+        {
+          "symbol": "__stack_chk_fail",
+          "crc": "0xf0fdf6cb"
+        },
+        {
+          "symbol": "ktime_get",
+          "crc": "0xb43f9365"
+        },
+        {
+          "symbol": "qdisc_watchdog_schedule_range_ns",
+          "crc": "0xad94d7cb"
+        },
+        {
+          "symbol": "alt_cb_patch_nops",
+          "crc": "0xa65c6def"
+        },
+        {
+          "symbol": "qdisc_watchdog_init",
+          "crc": "0x06b8f9bf"
+        },
+        {
+          "symbol": "tcf_block_get",
+          "crc": "0x331d7116"
+        },
+        {
+          "symbol": "qdisc_watchdog_cancel",
+          "crc": "0x640e4a70"
+        },
+        {
+          "symbol": "qdisc_reset",
+          "crc": "0xb6ea7d71"
+        },
+        {
+          "symbol": "tcf_block_put",
+          "crc": "0x68ebe2d7"
+        },
+        {
+          "symbol": "qdisc_put",
+          "crc": "0x13f0367e"
+        },
+        {
+          "symbol": "pfifo_qdisc_ops",
+          "crc": "0x49a1017d"
+        },
+        {
+          "symbol": "qdisc_create_dflt",
+          "crc": "0xdfdbf9b1"
+        },
+        {
+          "symbol": "rtnl_is_locked",
+          "crc": "0x85670f1d"
+        },
+        {
+          "symbol": "_raw_spin_lock_bh",
+          "crc": "0x0c3690fc"
+        },
+        {
+          "symbol": "psched_ratecfg_precompute",
+          "crc": "0xb6e36ce2"
+        },
+        {
+          "symbol": "gnet_stats_add_queue",
+          "crc": "0x61b840f6"
+        },
+        {
+          "symbol": "qdisc_tree_reduce_backlog",
+          "crc": "0x363c9e76"
+        },
+        {
+          "symbol": "noop_qdisc",
+          "crc": "0x7bf6015b"
+        },
+        {
+          "symbol": "qdisc_hash_add",
+          "crc": "0x17f8add8"
+        },
+        {
+          "symbol": "_raw_spin_unlock_bh",
+          "crc": "0xe46021ca"
+        },
+        {
+          "symbol": "__warn_printk",
+          "crc": "0x56470118"
+        },
+        {
+          "symbol": "nla_put",
+          "crc": "0xfbeddcfa"
+        },
+        {
+          "symbol": "skb_trim",
+          "crc": "0x9b75b98a"
+        },
+        {
+          "symbol": "gnet_stats_copy_basic",
+          "crc": "0xe913c8fc"
+        },
+        {
+          "symbol": "gnet_stats_copy_queue",
+          "crc": "0xa7c1cbe5"
+        },
+        {
+          "symbol": "__cpu_possible_mask",
+          "crc": "0xde7ece30"
+        },
+        {
+          "symbol": "__per_cpu_offset",
+          "crc": "0x280f9f14"
+        },
+        {
+          "symbol": "crc32_be",
+          "crc": "0x4df02057"
+        },
+        {
+          "symbol": "kmalloc_caches",
+          "crc": "0x74661383"
+        },
+        {
+          "symbol": "kmalloc_trace",
+          "crc": "0xa8541c9b"
+        },
+        {
+          "symbol": "rb_insert_color",
+          "crc": "0xa5526619"
+        },
+        {
+          "symbol": "rb_first",
+          "crc": "0xece784c2"
+        },
+        {
+          "symbol": "rb_erase",
+          "crc": "0x4d9b652b"
+        },
+        {
+          "symbol": "__netif_schedule",
+          "crc": "0xc818f702"
+        },
+        {
+          "symbol": "memset",
+          "crc": "0xdcb764ad"
+        },
+        {
+          "symbol": "delayed_work_timer_fn",
+          "crc": "0x253af43d"
+        },
+        {
+          "symbol": "init_timer_key",
+          "crc": "0x79cf5987"
+        },
+        {
+          "symbol": "rtnl_kfree_skbs",
+          "crc": "0x1e95168f"
+        },
+        {
+          "symbol": "rb_next",
+          "crc": "0xca9360b5"
+        },
+        {
+          "symbol": "cancel_delayed_work_sync",
+          "crc": "0xf8beca97"
+        },
+        {
+          "symbol": "kfree",
+          "crc": "0x037a0cba"
+        },
+        {
+          "symbol": "system_wq",
+          "crc": "0x2d3385d3"
+        },
+        {
+          "symbol": "queue_delayed_work_on",
+          "crc": "0xbf57e89e"
+        },
+        {
+          "symbol": "ipv6_skip_exthdr",
+          "crc": "0xdf485b11"
+        },
+        {
+          "symbol": "skb_copy_bits",
+          "crc": "0x6a47ace0"
+        },
+        {
+          "symbol": "module_layout",
+          "crc": "0x4e276f37"
+        }
+      ]
+    },
+    {
+      "filename": "qti_dmof_scmi.ko",
+      "sha256": "fb154ad4852ce8130c4e78957d4851cd00105a2af9fa87772d0f7c2b88b06ebb",
+      "vermagic": "6.6.118-android15-8-o-g1524d9b076be-4k SMP preempt mod_unload modversions aarch64",
+      "imports": [
+        {
+          "symbol": "socinfo_get_id_string",
+          "crc": "0x36b5aac0"
+        },
+        {
+          "symbol": "strncmp",
+          "crc": "0x5a921311"
+        },
+        {
+          "symbol": "__platform_driver_register",
+          "crc": "0x279498f1"
+        },
+        {
+          "symbol": "platform_device_register_full",
+          "crc": "0x90518330"
+        },
+        {
+          "symbol": "_printk",
+          "crc": "0x92997ed8"
+        },
+        {
+          "symbol": "platform_driver_unregister",
+          "crc": "0xf5ab7c57"
+        },
+        {
+          "symbol": "__stack_chk_fail",
+          "crc": "0xf0fdf6cb"
+        },
+        {
+          "symbol": "devm_kmalloc",
+          "crc": "0x9360f980"
+        },
+        {
+          "symbol": "cpu_subsys",
+          "crc": "0x8bc00e08"
+        },
+        {
+          "symbol": "bus_get_dev_root",
+          "crc": "0x9327516a"
+        },
+        {
+          "symbol": "get_qcom_scmi_device",
+          "crc": "0xb0e7a18b"
+        },
+        {
+          "symbol": "dev_err_probe",
+          "crc": "0xb25b2beb"
+        },
+        {
+          "symbol": "__mutex_init",
+          "crc": "0xa571f6b0"
+        },
+        {
+          "symbol": "__cpu_possible_mask",
+          "crc": "0xde7ece30"
+        },
+        {
+          "symbol": "__sw_hweight64",
+          "crc": "0x9f46ced8"
+        },
+        {
+          "symbol": "cpus_read_lock",
+          "crc": "0xa04f945a"
+        },
+        {
+          "symbol": "__per_cpu_offset",
+          "crc": "0x280f9f14"
+        },
+        {
+          "symbol": "__cpu_online_mask",
+          "crc": "0xac594e02"
+        },
+        {
+          "symbol": "__init_waitqueue_head",
+          "crc": "0xd9a5ea54"
+        },
+        {
+          "symbol": "wakeup_source_register",
+          "crc": "0xed7053fc"
+        },
+        {
+          "symbol": "kthread_create_on_cpu",
+          "crc": "0x6664a979"
+        },
+        {
+          "symbol": "kthread_set_per_cpu",
+          "crc": "0x13e0fd53"
+        },
+        {
+          "symbol": "kthread_park",
+          "crc": "0xb8f6c964"
+        },
+        {
+          "symbol": "alt_cb_patch_nops",
+          "crc": "0xa65c6def"
+        },
+        {
+          "symbol": "sched_setscheduler_nocheck",
+          "crc": "0x99e45d92"
+        },
+        {
+          "symbol": "kthread_unpark",
+          "crc": "0xac57a959"
+        },
+        {
+          "symbol": "refcount_warn_saturate",
+          "crc": "0x0296695f"
+        },
+        {
+          "symbol": "__cpuhp_setup_state_cpuslocked",
+          "crc": "0xb2fdc891"
+        },
+        {
+          "symbol": "cpus_read_unlock",
+          "crc": "0x18fb2caf"
+        },
+        {
+          "symbol": "device_create_file",
+          "crc": "0x95e93781"
+        },
+        {
+          "symbol": "put_device",
+          "crc": "0x753efb34"
+        },
+        {
+          "symbol": "_dev_err",
+          "crc": "0x3b00ee3e"
+        },
+        {
+          "symbol": "__put_task_struct",
+          "crc": "0xc6040a84"
+        },
+        {
+          "symbol": "kthread_stop",
+          "crc": "0xd2ef8b35"
+        },
+        {
+          "symbol": "mutex_lock",
+          "crc": "0xd5977bfb"
+        },
+        {
+          "symbol": "cpu_bit_bitmap",
+          "crc": "0x62ad2053"
+        },
+        {
+          "symbol": "kthread_bind_mask",
+          "crc": "0xe25c2556"
+        },
+        {
+          "symbol": "__wake_up",
+          "crc": "0xe2964344"
+        },
+        {
+          "symbol": "init_wait_entry",
+          "crc": "0xfe487975"
+        },
+        {
+          "symbol": "prepare_to_wait_event",
+          "crc": "0x8c26d495"
+        },
+        {
+          "symbol": "schedule",
+          "crc": "0x01000e51"
+        },
+        {
+          "symbol": "finish_wait",
+          "crc": "0x92540fbf"
+        },
+        {
+          "symbol": "mutex_unlock",
+          "crc": "0xed55cabd"
+        },
+        {
+          "symbol": "kthread_should_stop",
+          "crc": "0xb3f7646e"
+        },
+        {
+          "symbol": "cpu_number",
+          "crc": "0xf8b9acd3"
+        },
+        {
+          "symbol": "kthread_parkme",
+          "crc": "0xf95322f4"
+        },
+        {
+          "symbol": "kthread_should_park",
+          "crc": "0x79defbe1"
+        },
+        {
+          "symbol": "__pm_relax",
+          "crc": "0x1527600b"
+        },
+        {
+          "symbol": "cpu_logical_to_phys",
+          "crc": "0x8d739f8a"
+        },
+        {
+          "symbol": "__pm_stay_awake",
+          "crc": "0x7e76edb1"
+        },
+        {
+          "symbol": "preempt_schedule",
+          "crc": "0x43b0c9c3"
+        },
+        {
+          "symbol": "scnprintf",
+          "crc": "0x96848186"
+        },
+        {
+          "symbol": "kstrtobool",
+          "crc": "0x124bad4d"
+        },
+        {
+          "symbol": "module_layout",
+          "crc": "0x4e276f37"
+        }
+      ]
+    }
+  ]
+}

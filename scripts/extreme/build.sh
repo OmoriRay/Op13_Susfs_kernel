@@ -51,6 +51,7 @@ if [[ "$jobs" -gt 4 ]]; then jobs=4; fi
 make "${args[@]}" -j"$jobs" Image modules 2>&1 | tee "$report/build.log"
 cp "$out/Module.symvers" "$report/Module.symvers"
 cp "$out/vmlinux.symvers" "$report/vmlinux.symvers"
+python3 scripts/extreme/verify_abi.py "$variant"
 llvm-readelf -h "$out/vmlinux" > "$report/vmlinux-elf-header.txt"
 llvm-nm -n "$out/vmlinux" | grep -E 'ksu_handle_susfs_cmd|susfs_set_priority_uid_filter|smap_gather_stats|hmbird|slim_walt' > "$report/integrated-symbols.txt"
 cp "$out/include/generated/utsrelease.h" "$report/utsrelease.h"
