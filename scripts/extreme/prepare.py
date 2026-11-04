@@ -137,7 +137,9 @@ def main():
     manifests=[]
     for patch in sorted((ROOT/'patches/extreme').glob('*.patch')):
         manifests.append({'file':patch.name,'sha256':hashlib.file_digest(patch.open('rb'),'sha256').hexdigest(),
-                          'applied_in_prepare':not patch.name.startswith('0100')})
+                          'applied_in_prepare':patch.name.startswith(('0001-','0002-','0003-')),
+                          'applied_in_build':patch.name.startswith('0004-'),
+                          'applied_in_lab_max_only':patch.name.startswith('0100-')})
     (REPORT/'patches.json').write_text(json.dumps(manifests,indent=2))
     (REPORT/'common-changes.patch').write_bytes(output('git','diff','--binary',cwd=common))
     (REPORT/'bakasu-changes.patch').write_bytes(output('git','diff','--binary',cwd=baka))
