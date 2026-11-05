@@ -4,6 +4,16 @@ variant="$1"
 stage="${2:-all}"
 case "$stage" in all|prepare|precheck|compile|package) ;; *) exit 2 ;; esac
 root="$(pwd)"
+profile_options="$(python3 - "$variant" <<'PY'
+import json,sys
+from pathlib import Path
+profile=json.loads(Path('scripts/extreme/profiles.json').read_text())[sys.argv[1]]
+assert profile['lto'] in ['thin','full'] and profile['hz'] in [250,1000]
+assert profile['adios'] in ['3.1.6','3.3.0'] and profile['mtune'] in [None,'oryon-1']
+print(int(profile['adios']=='3.3.0'),profile['mtune'] or 'none')
+PY
+)"
+read -r profile_adios33 profile_mtune <<< "$profile_options"
 report="$root/reports/$variant"
 mkdir -p "$report" toolchain
 export PATH="$root/toolchain/bin:$PATH"
@@ -17,12 +27,13 @@ import json,sys
 from pathlib import Path
 import subprocess
 patches=['0004-counted-by-genksyms-compat.patch']
-if sys.argv[1]=='lab-max':patches.append('0100-adios-3.3.0-backport.patch')
+profile=json.loads(Path('scripts/extreme/profiles.json').read_text())[sys.argv[1]]
+if profile['adios']=='3.3.0':patches.append('0100-adios-3.3.0-backport.patch')
 for name in patches:
     patch=Path('patches/extreme',name).resolve()
     for options in [['--check'],[]]:
         subprocess.run(['git','apply',*options,'--directory=kernel_workspace/common','--whitespace=error-all',str(patch)],check=True)
-if sys.argv[1]=='lab-max':assert '#define ADIOS_VERSION "3.3.0"' in Path('kernel_workspace/common/block/adios.c').read_text()
+if profile['adios']=='3.3.0':assert '#define ADIOS_VERSION "3.3.0"' in Path('kernel_workspace/common/block/adios.c').read_text()
 PY
 python3 - <<'PY'
 import json,subprocess,hashlib
@@ -40,17 +51,21 @@ python3 scripts/extreme/configure.py "$variant"
 fi
 out="$root/kernel_workspace/out-$variant"
 args=(-C "$root/kernel_workspace/common" "O=$out" ARCH=arm64 LLVM=1 LLVM_IAS=1)
-if [[ "$variant" == lab-max ]]; then args+=(KCFLAGS=-mtune=oryon-1); fi
+if [[ "$profile_mtune" != none ]]; then args+=("KCFLAGS=-mtune=$profile_mtune"); fi
 if [[ "$stage" == precheck || "$stage" == all ]]; then
 make "${args[@]}" -j2 V=1 KBUILD_SYMTYPES=1 fs/proc/task_mmu.o fs/susfs.o mm/huge_memory.o block/adios.o drivers/interconnect/core.o 2>&1 | tee "$report/precheck.log"
 python3 - "$out" "$report" <<'PY'
 import sys,json,re,shutil
 from pathlib import Path
 out=Path(sys.argv[1]);report=Path(sys.argv[2]);records=[]
+profile=json.loads((report/'profile-spec.json').read_text())
 for name in ['fs/proc/.task_mmu.o.cmd','fs/.susfs.o.cmd','mm/.huge_memory.o.cmd','block/.adios.o.cmd']:
     text=(out/name).read_text();assert ' -O3 ' in text,name
     assert '-fsanitize=kcfi' in text or '-fsanitize=cfi' in text,name
-    records.append({'file':name,'O3':True,'CFI':True})
+    lto_ok=('-flto=thin' in text) if profile['lto']=='thin' else ((' -flto ' in text or '-flto=full' in text) and '-flto=thin' not in text)
+    tune_ok=('-mtune=oryon-1' in text)==(profile['mtune']=='oryon-1')
+    assert lto_ok and tune_ok,name
+    records.append({'file':name,'O3':True,'CFI':True,'LTO':profile['lto'],'mtune':profile['mtune'],'LTO_checked':True,'mtune_checked':True})
 (report/'compiler-command-checks.json').write_text(json.dumps(records,indent=2))
 text=(out/'drivers/interconnect/.core.o.cmd').read_text()
 actual={k:int(v,16) for k,v in re.findall(r'#SYMVER\s+(\w+)\s+(0x[0-9a-fA-F]+)',text)}

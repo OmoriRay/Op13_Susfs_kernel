@@ -3,7 +3,7 @@ import gzip,hashlib,json,shutil,struct,subprocess,sys,zipfile,zlib
 from pathlib import Path
 
 root=Path(__file__).resolve().parents[2];variant=sys.argv[1]
-assert variant in ['extreme','lab-full-lto','lab-max']
+assert variant in json.loads((root/'scripts/extreme/profiles.json').read_text())
 lock=json.loads((root/'scripts/extreme/sources.json').read_text())
 out=root/'kernel_workspace'/('out-'+variant);dest=root/'artifacts';dest.mkdir(exist_ok=True)
 report=root/'reports'/variant

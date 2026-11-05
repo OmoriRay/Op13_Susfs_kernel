@@ -2,7 +2,11 @@
 import argparse,json,os,subprocess
 from pathlib import Path
 
-p=argparse.ArgumentParser();p.add_argument('variant',choices=['extreme','lab-full-lto','lab-max']);a=p.parse_args()
+profiles=json.loads(Path(__file__).with_name('profiles.json').read_text())
+p=argparse.ArgumentParser();p.add_argument('variant',choices=profiles);a=p.parse_args()
+profile=profiles[a.variant]
+assert profile['lto'] in ['thin','full'] and profile['hz'] in [250,1000]
+assert profile['adios'] in ['3.1.6','3.3.0'] and profile['mtune'] in [None,'oryon-1']
 root=Path(__file__).resolve().parents[2];common=root/'kernel_workspace/common'
 out=root/'kernel_workspace'/('out-'+a.variant);report=root/'reports'/a.variant;report.mkdir(parents=True,exist_ok=True)
 args=['make','-C',str(common),'O='+str(out),'ARCH=arm64','LLVM=1','LLVM_IAS=1']
@@ -30,11 +34,12 @@ disabled=['KSU_TRACEPOINT_HOOK','KSU_MANUAL_HOOK','KSU_DEBUG','KSU_SUSFS_ENABLE_
  'ZRAM_DEF_COMP_LZORLE','ZRAM_DEF_COMP_ZSTD','ZRAM_DEF_COMP_LZO','ZRAM_DEF_COMP_LZ4HC','AUTOFDO_CLANG']
 for flag in enabled:setval(flag,True)
 for flag in disabled:setval(flag,False)
-full=a.variant!='extreme'
+full=profile['lto']=='full'
 setval('LTO_CLANG_THIN',not full);setval('LTO_CLANG_FULL',full);setval('LTO_NONE',False)
-setval('HZ_250',a.variant!='lab-max');setval('HZ_1000',a.variant=='lab-max')
+setval('HZ_250',profile['hz']==250);setval('HZ_1000',profile['hz']==1000)
 setval('ZSMALLOC_CHAIN_SIZE',16)
-string('KSU_FULL_NAME_FORMAT','%TAG_NAME%-%COMMIT_SHA%-op13-v2')
+suffix='-op13-v2'+('-'+a.variant if a.variant.startswith('lab-thin-') else '')
+string('KSU_FULL_NAME_FORMAT','%TAG_NAME%-%COMMIT_SHA%'+suffix)
 string('LOCALVERSION','-android15-8-g9bc34d5b0c79-abogki537459655-4k')
 run(*args,'olddefconfig')
 text=cfg.read_text();values={}
@@ -44,14 +49,15 @@ for line in text.splitlines():
 for flag in enabled:assert values.get(flag)=='y',(flag,values.get(flag))
 for flag in disabled:assert values.get(flag) not in ['y','m'],flag
 assert values.get('LTO_CLANG_FULL' if full else 'LTO_CLANG_THIN')=='y'
-assert values.get('HZ')==('1000' if a.variant=='lab-max' else '250')
+assert values.get('HZ')==str(profile['hz'])
 assert values.get('ZSMALLOC_CHAIN_SIZE')=='16'
 assert values.get('ZRAM_DEF_COMP')=='"lz4"'
 assert values.get('ARM64_PAGE_SHIFT')=='12'
 (report/'final.config').write_text(text)
 manifest={'variant':a.variant,'actual_kernel':'6.6.118','compiler_target':'LLVM 23.1.5','optimization':'O3',
  'lto':'full' if full else 'thin','hz':int(values['HZ']),'mthp_64k_default':True,'zsmalloc_chain_size':16,
- 'adios':'3.3.0 backport' if a.variant=='lab-max' else '3.1.6','mtune':'oryon-1 experimental' if a.variant=='lab-max' else 'unchanged',
+ 'adios':'3.3.0 backport' if profile['adios']=='3.3.0' else '3.1.6','mtune':'oryon-1 experimental' if profile['mtune'] else 'unchanged',
  'cfi':'enforcing','vendor_ABI_verified':False,'boot_tested':False,'performance_tested':False}
 (report/'profile.json').write_text(json.dumps(manifest,indent=2))
+(report/'profile-spec.json').write_text(json.dumps(profile,indent=2))
 print(json.dumps(manifest))

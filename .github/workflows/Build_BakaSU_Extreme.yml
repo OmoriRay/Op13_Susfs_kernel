@@ -10,7 +10,7 @@ on:
       variants:
         description: JSON array of profiles to compile
         type: string
-        default: '["extreme","lab-full-lto","lab-max"]'
+        default: '["lab-thin-adios33","lab-thin-oryon","lab-thin-max"]'
 
 permissions:
   contents: read
@@ -81,13 +81,21 @@ jobs:
           tar --zstd -xf prepared-sources.tar.zst -C kernel_workspace
           rm prepared-sources.tar.zst
       - name: Prepare LLVM and final configuration
-        run: bash scripts/extreme/build.sh '${{ matrix.variant }}' prepare
+        env:
+          BUILD_PROFILE: ${{ matrix.variant }}
+        run: bash scripts/extreme/build.sh "$BUILD_PROFILE" prepare
       - name: Compile key objects and check interconnect CRCs
-        run: bash scripts/extreme/build.sh '${{ matrix.variant }}' precheck
+        env:
+          BUILD_PROFILE: ${{ matrix.variant }}
+        run: bash scripts/extreme/build.sh "$BUILD_PROFILE" precheck
       - name: Compile Image and modules and check vendor imports
-        run: bash scripts/extreme/build.sh '${{ matrix.variant }}' compile
+        env:
+          BUILD_PROFILE: ${{ matrix.variant }}
+        run: bash scripts/extreme/build.sh "$BUILD_PROFILE" compile
       - name: Package and inspect AK3
-        run: bash scripts/extreme/build.sh '${{ matrix.variant }}' package
+        env:
+          BUILD_PROFILE: ${{ matrix.variant }}
+        run: bash scripts/extreme/build.sh "$BUILD_PROFILE" package
       - name: Upload build evidence
         if: always()
         uses: actions/upload-artifact@v4

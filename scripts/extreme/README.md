@@ -1,6 +1,6 @@
 # OP13 BakaSU Extreme V2
 
-Three explicit build profiles use the pinned 6.6.118 OEM base, BakaSU 35257/UAPI 6,
+Build profiles use the pinned 6.6.118 OEM base, BakaSU 35257/UAPI 6,
 official SUSFS c7f670f5 with reviewed integration, LLVM 23.1.5, real O3,
 configurable 64K anonymous mTHP, zsmalloc chain 16, LZ4-default ZRAM and enforcing CFI.
 
@@ -9,6 +9,36 @@ configurable 64K anonymous mTHP, zsmalloc chain 16, LZ4-default ZRAM and enforci
 | extreme | Thin | 250 | existing 3.1.6 | unchanged |
 | lab-full-lto | Full | 250 | existing 3.1.6 | unchanged |
 | lab-max | Full | 1000 | 3.3.0 backport | experimental `-mtune=oryon-1` |
+
+### PJZ110 boot observations, 2026-11-05
+
+The original `lab-max` was written correctly but did not complete its first boot.
+After restoring the verified v111 built-in 35257/UAPI 6 baseline, a temporary RAM
+boot of `extreme` completed Android boot and basic root/config/module checks.
+A RAM boot of `lab-full-lto` did not complete Android boot within 150 seconds.
+The two control profiles have identical configuration except the Thin/Full LTO
+choice. This implicates the Full LTO build path; the precise code cause remains
+unknown. No performance or long-term stability result is claimed.
+
+The next diagnostic matrix uses the same LLVM 23.1.5, O3, SUSFS, memory settings
+and ThinLTO/HZ250 baseline that completed the initial RAM boot:
+
+| Profile | ADIOS | CPU tuning | Purpose |
+|---|---|---|---|
+| lab-thin-adios33 | 3.3.0 backport | unchanged | isolate scheduler update |
+| lab-thin-oryon | 3.1.6 | experimental `-mtune=oryon-1` | isolate compiler tuning |
+| lab-thin-max | 3.3.0 backport | experimental `-mtune=oryon-1` | combined candidate |
+
+All profile choices are recorded in `profiles.json`. The original profiles remain
+available for reproducibility, but Full LTO/HZ1000 are not the default dispatch.
+Existing vendor modules may contain compile-time HZ-dependent timeout constants
+(`include/linux/jiffies.h`); matching exported CRCs does not verify that timing
+contract. HZ250 is retained for these diagnostic builds. This is a compatibility
+risk assessment, not a proven explanation of the failed boot.
+
+The new candidates must pass source/config/CRC/package checks and a temporary
+boot test before any permanent installation. RAM tests leave the known-working
+boot partition installed. Do not flash the failed original `lab-max` as a fix.
 
 The source audit at Actions run 41858601891 found 130 files with conflicts when
 integrating Linux 6.6.161 into this Android/OEM tree, plus missing/deleted-path
