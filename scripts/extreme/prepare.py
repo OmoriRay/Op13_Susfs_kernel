@@ -67,7 +67,7 @@ def lts_audit():
     WORK.mkdir(exist_ok=True);REPORT.mkdir(exist_ok=True)
     shutil.copyfile(Path(__file__).with_name('sources.json'),REPORT/'sources.json')
     common=WORK/'common'
-    checkout(LOCK['common']['repo'],LOCK['common']['commit'],common)
+    checkout(os.environ.get('OP13_COMMON_MIRROR',LOCK['common']['repo']),LOCK['common']['commit'],common)
     stable=WORK/'stable.git'
     if not stable.exists():run('git','init','--bare','-q',stable)
     run('git','--git-dir',stable,'fetch','--depth=1',LOCK['linux']['repo'],
@@ -95,14 +95,15 @@ def main():
     WORK.mkdir(exist_ok=True);REPORT.mkdir(exist_ok=True)
     shutil.copyfile(Path(__file__).with_name('sources.json'),REPORT/'sources.json')
     common=WORK/'common'
-    checkout(LOCK['common']['repo'],LOCK['common']['commit'],common)
+    checkout(os.environ.get('OP13_COMMON_MIRROR',LOCK['common']['repo']),LOCK['common']['commit'],common)
     baka=WORK/'BakaSU'
-    run('git','clone',LOCK['bakasu']['repo'],baka)
+    run('git','clone',os.environ.get('OP13_BAKASU_MIRROR',LOCK['bakasu']['repo']),baka)
     run('git','checkout','--detach',LOCK['bakasu']['commit'],cwd=baka)
     assert output('git','rev-parse','HEAD',cwd=baka).decode().strip()==LOCK['bakasu']['commit']
     assert int(output('git','rev-list','--count','HEAD',cwd=baka))+30700==35257
     archive=WORK/'susfs.tar.gz'
-    run('curl','--fail','--location','--retry','3','--silent','--show-error',LOCK['susfs']['archive'],'-o',archive)
+    if not archive.is_file() or hashlib.file_digest(archive.open('rb'),'sha256').hexdigest()!=LOCK['susfs']['sha256']:
+        run('curl','--fail','--location','--retry','3','--silent','--show-error',LOCK['susfs']['archive'],'-o',archive)
     assert hashlib.file_digest(archive.open('rb'),'sha256').hexdigest()==LOCK['susfs']['sha256']
     susfs=WORK/'susfs';susfs.mkdir()
     with tarfile.open(archive) as t:
