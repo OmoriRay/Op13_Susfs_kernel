@@ -21,8 +21,20 @@ prop() {
 }
 writeval() {
     # The injected writer exists only inside the isolated host-test filesystem.
-    if [ -n "$ROOT" ]; then "$ROOT/write-node" "$2" "$1"; else printf '%s\n' "$1" > "$2"; fi
+    if [ -n "$ROOT" ]; then
+        "$ROOT/write-node" "$2" "$1" 2>> "$STATE/memory.log"
+    else
+        { printf '%s\n' "$1" > "$2"; } 2>> "$STATE/memory.log"
+    fi
+    op13mem_write_rc=$?
+    if [ "$op13mem_write_rc" -ne 0 ]; then log "WRITE failed: node=$2 value=$1 rc=$op13mem_write_rc"; fi
+    return "$op13mem_write_rc"
 }
+# Android mksh deliberately uses 32-bit arithmetic, including numeric [ tests ].
+# Byte capacities exceed that range. Keep all byte arithmetic/comparisons in
+# awk; values here are bounded well below the exact-integer limit of doubles.
+size_for_percent() { awk -v kb="$1" -v pct="$2" 'BEGIN {printf "%.0f\n", int(kb * 1024 * pct / 100 / 4096) * 4096}'; }
+number_ge() { awk -v left="$1" -v right="$2" 'BEGIN {exit !(left + 0 >= right + 0)}'; }
 current_algo() { sed -n 's/.*\[\([^]]*\)\].*/\1/p' "$Z/comp_algorithm"; }
 supported() { tr '[]' '  ' < "$Z/comp_algorithm" | grep -qw "$1"; }
 active() { awk '$1 ~ /\/zram0$/ {found=1} END{exit !found}' "$P/swaps"; }
@@ -38,6 +50,7 @@ set_status() {
         printf 'algorithm=%s\ndisksize=%s\n' "$(current_algo 2>/dev/null)" "$(readval "$Z/disksize")"
         printf 'SwapTotal_kB=%s\n' "$(memval SwapTotal)"
         printf 'boot_id=%s\n' "${BOOTID:-unknown}"
+        printf 'requested_algorithm=%s\nrequested_bytes=%s\n' "${ALGO:-unknown}" "${TARGET_SIZE:-unknown}"
     } > "$STATE/status.new"
     mv -f "$STATE/status.new" "$STATE/status.txt"
     log "STATE $1"
@@ -89,15 +102,18 @@ recover() {
     case "$recovery_algo" in lz4|zstd|lzo|lzo-rle|lz4hc) ;; *) recovery_algo=lz4;; esac
     # A refused reset can leave the old, still-formatted device intact. Try
     # reactivation before another reset; do not strand a working old header.
-    if [ "$recovery_size" -gt 0 ] && [ "$(readval "$Z/disksize")" = "$recovery_size" ] && [ "$(current_algo)" = "$recovery_algo" ]; then
+    if number_ge "$recovery_size" 1073741824 && [ "$(readval "$Z/disksize")" = "$recovery_size" ] && [ "$(current_algo)" = "$recovery_algo" ]; then
         if "$TOYBOX" swapon -p 32767 "$DEVICE" >> "$STATE/memory.log" 2>&1 && healthy_swap; then
             set_status recovered
             return 1
         fi
     fi
-    if [ "$recovery_size" -lt 4096 ]; then recovery_size=$((MEM_KB * 1024 * 75 / 100 / 4096 * 4096)); fi
+    if ! number_ge "$recovery_size" 1073741824; then
+        recovery_size=$(size_for_percent "$MEM_KB" 75) || { set_status error-recovery-size; return 1; }
+    fi
+    log "RECOVERY algorithm=$recovery_algo bytes=$recovery_size"
     if configure_device "$recovery_algo" "$recovery_size"; then
-        if [ "$OLD_LIMIT" -gt 0 ]; then writeval "$OLD_LIMIT" "$Z/mem_limit" || log 'Could not restore mem_limit'; fi
+        if number_ge "$OLD_LIMIT" 1; then writeval "$OLD_LIMIT" "$Z/mem_limit" || log 'Could not restore mem_limit'; fi
         set_status recovered
     else
         set_status error-no-swap
@@ -140,7 +156,10 @@ boot() {
     MEM_KB=$(memval MemTotal)
     case "$MEM_KB" in ''|*[!0-9]*) return 1;; esac
     [ "$MEM_KB" -ge 8000000 ] && [ "$MEM_KB" -le 40000000 ] || return 1
-    TARGET_SIZE=$((MEM_KB * 1024 * PERCENT / 100 / 4096 * 4096))
+    TARGET_SIZE=$(size_for_percent "$MEM_KB" "$PERCENT") || { set_status blocked-capacity-calculation; return 1; }
+    case "$TARGET_SIZE" in ''|*[!0-9]*) set_status blocked-capacity-calculation; return 1;; esac
+    number_ge "$TARGET_SIZE" 1073741824 || { set_status blocked-capacity-calculation; return 1; }
+    log "REQUEST profile=$PROFILE algorithm=$ALGO MemTotal_kB=$MEM_KB bytes=$TARGET_SIZE"
     OLD_ALGO=$(current_algo); OLD_SIZE=$(readval "$Z/disksize")
     OLD_LIMIT=$(awk '{print $4}' "$Z/mm_stat")
     case "$OLD_SIZE:$OLD_LIMIT" in *[!0-9:]*|:|*:|:*) return 1;; esac

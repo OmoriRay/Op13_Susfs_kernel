@@ -1,5 +1,7 @@
 #!/system/bin/sh
 MODDIR=${0%/*}
+umask 077
+mkdir -p /data/adb/op13_memory
 # Bounded wait; a module must not block boot or repeatedly reset live swap.
 n=0
 until [ "$(/system/bin/getprop sys.boot_completed)" = 1 ]; do
@@ -8,4 +10,4 @@ until [ "$(/system/bin/getprop sys.boot_completed)" = 1 ]; do
     sleep 1
 done
 sleep 8
-/system/bin/sh "$MODDIR/memory.sh" boot
+/system/bin/sh "$MODDIR/memory.sh" boot >> /data/adb/op13_memory/service.log 2>&1

@@ -64,13 +64,17 @@ def main():
     # Normalize this text so cloud/Linux and Windows builds use the same bytes.
     module_payload['LICENSE'] = (ROOT / 'LICENSE').read_text(encoding='utf-8').encode()
     module_payload['README.md'] = (ROOT / 'docs/OP13-Memory-Companion.md').read_bytes()
+    module_properties = dict(line.split('=', 1) for line in module_payload['module.prop'].decode().splitlines() if '=' in line)
+    module_version = module_properties['version'].removeprefix('v')
+    release_version = module_version.split('-', 1)[0]
+    assert all(part.isdigit() for part in release_version.split('.')) and release_version.count('.') == 2
     for name in ('customize.sh', 'service.sh', 'memory.sh', 'x1-handoff.sh', 'uninstall.sh', 'module.prop', 'skip_mount'):
         assert name in module_payload
     manifest = {
         'schema': 1, 'integration_commit': commit, 'kernel': LOCK,
         'kernel_recompiled': False, 'kernel_Image_unchanged': True,
         'new_bundle_device_tested': False, 'performance_tested': False,
-        'module_id': 'op13_memory', 'module_version': '1.0.0-experimental',
+        'module_id': 'op13_memory', 'module_version': module_version,
         'module_files': {name: sha(data) for name, data in sorted(module_payload.items())},
         'profiles': {
             'pandora_like': {'primary': 'lz4', 'capacity_percent_MemTotal': 200, 'swappiness': 100, 'page_cluster': 0, 'watermark_scale_factor': 200, 'min_ttl_ms': 1000},
@@ -81,7 +85,7 @@ def main():
         'writeback': 'Not configured; an existing backing device blocks takeover',
         'x1_handoff': 'Reviewed 2.13.0 only, guarded zram_apply and ram_expand_apply; original-file backups retained',
     }
-    module_name = 'OP13_Memory_Companion_v1.0.0_TEST_ONLY.zip'
+    module_name = f'OP13_Memory_Companion_v{release_version}_TEST_ONLY.zip'
     module_path = args.out / module_name
     archive(module_path, module_payload)
     manifest['module_zip_sha256'] = sha(module_path.read_bytes())
@@ -114,7 +118,7 @@ ui_print "Kernel and companion installed. Reboot; verify /proc/swaps and SwapTot
     payload['companion.zip'] = module_path.read_bytes()
     payload['memory-manifest.json'] = (json.dumps(manifest, ensure_ascii=False, indent=2) + '\n').encode()
     payload['MEMORY-README.md'] = (ROOT / 'docs/OP13-Memory-Companion.md').read_bytes()
-    name = 'AK3_OP13_BakaSU_lab-thin-max_Memory-v1.0.0_TEST_ONLY.zip'
+    name = f'AK3_OP13_BakaSU_lab-thin-max_Memory-v{release_version}_TEST_ONLY.zip'
     archive(args.out / name, payload)
     assert b'PATCH_VBMETA_FLAG=0' in payload['anykernel.sh']
     assert b'NO_VBMETA_PARTITION_PATCH=1' in payload['anykernel.sh']

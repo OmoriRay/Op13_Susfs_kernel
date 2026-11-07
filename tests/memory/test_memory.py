@@ -14,6 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 MODULE = ROOT / 'modules/op13_memory'
 FP = 'OnePlus/PJZ110/OP5D0DL1:17/CP2A.260605.016/V.487427a-2227f32-224bc4c:user/release-keys'
 ZRAM = '/sys/block/zram0/'
+SHELL = os.environ.get('OP13MEM_TEST_SHELL', '/bin/sh')
 HELPER = r'''
 import os,sys
 from pathlib import Path
@@ -38,6 +39,8 @@ if Path(sys.argv[0]).name=='write-node':
  elif node=='comp_algorithm':
   put('/sys/block/zram0/comp_algorithm',' '.join('['+x+']' if x==val else x for x in ('lzo','lzo-rle','lz4','lz4hc','zstd')))
  else:
+  if node=='disksize' and (not val.isdigit() or int(val)<=0):
+   print('Invalid argument: disksize must be positive',file=sys.stderr);sys.exit(1)
   put(path[len(str(r)):],val)
   if node=='disksize':put('/sys/block/zram0/initstate',1)
  sys.exit(0)
@@ -97,7 +100,7 @@ class MemoryTests(unittest.TestCase):
         return (self.root / path.lstrip('/')).read_text(encoding='utf-8')
 
     def run_script(self, script, *args, ok=True):
-        r = subprocess.run(['/bin/sh', str(MODULE / script), *args], env=self.env, text=True, capture_output=True)
+        r = subprocess.run([SHELL, str(MODULE / script), *args], env=self.env, text=True, capture_output=True)
         if ok:
             self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
         else:
@@ -133,6 +136,46 @@ class MemoryTests(unittest.TestCase):
         self.assertIn('state=recovered\n', self.status())
         self.assertEqual(self.text(ZRAM + 'disksize').strip(), '8000000000')
         self.assertIn('zram0 partition', self.text('/proc/swaps'))
+
+    def test_24gb_device_capacity_does_not_overflow_android_shell(self):
+        self.put('/proc/meminfo', 'MemTotal: 23613496 kB\nMemAvailable: 8000000 kB\nSwapTotal: 0 kB\nSwapFree: 0 kB')
+        self.run_script('memory.sh', 'boot')
+        self.assertEqual(self.text(ZRAM + 'disksize').strip(), '48360439808')
+        self.assertIn('state=active\n', self.status())
+
+    def test_exact_4gib_recovery_is_not_treated_as_zero(self):
+        self.put(ZRAM + 'disksize', '4294967296')
+        self.put('/fail-once-swapon', '')
+        self.run_script('memory.sh', 'boot', ok=False)
+        self.assertEqual(self.text(ZRAM + 'disksize').strip(), '4294967296')
+        self.assertIn('state=recovered\n', self.status())
+
+    def test_zero_capacity_recovery_uses_nonoverflowed_75_percent(self):
+        self.put('/proc/meminfo', 'MemTotal: 23613496 kB\nMemAvailable: 8000000 kB\nSwapTotal: 0 kB\nSwapFree: 0 kB')
+        self.put(ZRAM + 'disksize', '0')
+        self.put('/fail-once-swapon', '')
+        self.run_script('memory.sh', 'boot', ok=False)
+        self.assertEqual(self.text(ZRAM + 'disksize').strip(), '18135162880')
+        self.assertIn('state=recovered\n', self.status())
+
+    def test_buggy_v1_tiny_recovery_capacity_is_not_reused(self):
+        self.put('/proc/meminfo', 'MemTotal: 23613496 kB\nMemAvailable: 8000000 kB\nSwapTotal: 0 kB\nSwapFree: 0 kB')
+        self.put(ZRAM + 'disksize', '10399744')
+        self.put('/fail-once-swapon', '')
+        self.run_script('memory.sh', 'boot', ok=False)
+        self.assertEqual(self.text(ZRAM + 'disksize').strip(), '18135162880')
+
+    def test_large_physical_memory_limit_is_restored_without_wrapping(self):
+        self.put(ZRAM + 'mm_stat', '4096 64 20480 4294967296 20480 0 0 0 0')
+        self.put('/fail-once-swapon', '')
+        self.run_script('memory.sh', 'boot', ok=False)
+        self.assertEqual(self.text(ZRAM + 'mem_limit').strip(), '4294967296')
+
+    def test_failed_sysfs_write_is_recorded_with_path_and_value(self):
+        self.put('/fail-write-disksize', '')
+        self.run_script('memory.sh', 'boot', ok=False)
+        self.assertIn('WRITE failed', self.text('/data/adb/op13_memory/memory.log'))
+        self.assertIn('/disksize', self.text('/data/adb/op13_memory/memory.log'))
 
     def test_mkswap_failure_is_not_ignored(self):
         self.put('/fail-mkswap', '')
@@ -241,7 +284,7 @@ class MemoryTests(unittest.TestCase):
 
     def test_all_production_shell_files_parse(self):
         for file in MODULE.glob('*.sh'):
-            subprocess.run(['/bin/sh', '-n', str(file)], check=True)
+            subprocess.run([SHELL, '-n', str(file)], check=True)
 
 
 if __name__ == '__main__':
