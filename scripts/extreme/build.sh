@@ -39,7 +39,8 @@ python3 - <<'PY'
 import json,subprocess,hashlib
 from pathlib import Path
 x=json.loads(Path('scripts/extreme/sources.json').read_text())['llvm'];p=Path('toolchain/llvm.tar.zst')
-subprocess.run(['curl','--fail','--location','--retry','3','--silent','--show-error',x['url'],'-o',str(p)],check=True)
+if not p.is_file() or hashlib.file_digest(p.open('rb'),'sha256').hexdigest()!=x['sha256']:
+    subprocess.run(['curl','--fail','--location','--retry','3','--silent','--show-error',x['url'],'-o',str(p)],check=True)
 assert hashlib.file_digest(p.open('rb'),'sha256').hexdigest()==x['sha256']
 subprocess.run(['tar','--use-compress-program=zstd -d --long=31','-xf',str(p),'--strip-components=1','-C','toolchain'],check=True)
 p.unlink()
