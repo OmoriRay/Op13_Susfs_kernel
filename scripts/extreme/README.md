@@ -75,3 +75,13 @@ Artifacts are experimental, not boot-tested or performance-validated. They
 include final config, source/patch locks, real compiler-command checks, ELF and
 symbol evidence, hashes and a narrowly guarded AK3 ZIP for the reviewed PJZ110
 ColorOS 17 target/slot. No release publishing or device flashing is automated.
+
+## Memory companion integration
+
+The `bakasu-memory-v1` branch adds a paired AK3/standalone memory companion.
+See [the memory companion guide](../../docs/OP13-Memory-Companion.md).
+`Package_OP13_Memory.yml` reuses the hash-locked `lab-thin-max` Image from
+run 41965278315; it packages rather than recompiles that kernel. It tests the
+controller, checks the embedded config, and embeds a separately installable
+companion ZIP. The prior kernel has known runtime warnings; new module boot,
+game performance and long-term stability have not been validated.

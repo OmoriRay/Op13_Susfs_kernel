@@ -1,0 +1,19 @@
+{
+  "kernel_driver_repository": "cctv18/android_kernel_common_oneplus_sm8750",
+  "kernel_driver_commit": "2a4726b11594dd57d0779d2685fad5c81e5ed553",
+  "kernel_driver_path": "drivers/block/zram/zram_drv.c",
+  "git_blob_sha1": "7b2fc33d341e55c1780a738bae56fa3d4b691797",
+  "file_sha256": "d1bbb76c44bc7d87f0c0d9e9cd585f3aecc6b28ac2f3051f8ede8f95f7c8f228",
+  "bytes": 61187,
+  "reviewed_interfaces": {
+    "comp_algorithm": "Cannot change on an initialized device",
+    "recomp_algorithm": "algo and priority assignments; configure before disksize",
+    "recompress": "type, threshold and algo parsed; this exact source has no max_pages budget",
+    "idle": "all or entry-age seconds when CONFIG_ZRAM_TRACK_ENTRY_ACTIME enabled",
+    "reset": "Refuses an open/claimed device with EBUSY",
+    "backing_dev": "Must be configured before disksize; existing backing devices are not taken over"
+  },
+  "runtime_design_consequence": "No automatic recompress scanner in v1; do not assume latest docs' newer attributes exist in this 6.6 base",
+  "pandora_reference_scope": "Two user-supplied package scripts inspected; no private compression/MM source was obtained or transplanted",
+  "source_changes": "No kernel Image or driver source changes in this packaging revision"
+}

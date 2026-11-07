@@ -1,0 +1,50 @@
+name: OP13 BakaSU Memory Bundle
+on:
+  workflow_dispatch:
+  push:
+    branches: [bakasu-memory-v1]
+    paths:
+      - 'modules/op13_memory/**'
+      - 'scripts/memory/**'
+      - 'tests/memory/**'
+      - 'docs/OP13-Memory-Companion.md'
+      - '.github/workflows/Package_OP13_Memory.yml'
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: op13-memory-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  package:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+      - name: Run memory-controller regression tests
+        run: python3 -m unittest discover -s tests/memory -v
+      - uses: actions/download-artifact@v4
+        with:
+          name: OP13-BakaSU-V2-lab-thin-max
+          github-token: ${{ github.token }}
+          run-id: '41965278315'
+          path: base-artifacts
+      - uses: actions/download-artifact@v4
+        with:
+          name: OP13-BakaSU-V2-lab-thin-max-audit
+          github-token: ${{ github.token }}
+          run-id: '41965278315'
+          path: base-audit
+      - name: Recover exact configuration and evidence
+        run: |
+          cp base-audit/reports/lab-thin-max/final.config base-artifacts/
+          cp base-audit/reports/lab-thin-max/compiler-command-checks.json base-artifacts/
+          cp base-audit/reports/lab-thin-max/vendor-abi-sample-check.json base-artifacts/
+      - name: Build and inspect deterministic AK3 and companion packages
+        run: python3 scripts/memory/package.py --base base-artifacts --out artifacts/memory
+      - uses: actions/upload-artifact@v4
+        with:
+          name: OP13-BakaSU-Memory-v1
+          path: artifacts/memory/
+          compression-level: 0
+          retention-days: 30

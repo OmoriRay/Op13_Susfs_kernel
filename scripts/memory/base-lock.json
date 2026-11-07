@@ -1,0 +1,20 @@
+{
+  "repository": "OmoriRay/Op13_Susfs_kernel",
+  "run_id": 41965278315,
+  "artifact_name": "OP13-BakaSU-V2-lab-thin-max",
+  "kernel_source_commit": "aa1a9260ffbdaf7f6deec0e0802ad619ff20ced2",
+  "variant": "lab-thin-max",
+  "kernel_version": "6.6.118",
+  "Image_sha256": "e4d541a769a98c94eebce2c1042f087be15162bd16f92c8ed528f8e985050eaf",
+  "base_package": "AK3_OP13_BakaSU_V2_lab-thin-max_6.6.118_TEST_ONLY.zip",
+  "base_package_sha256": "fd0c2ea6d704cb9fb4507fc626664c18166b0bb59c9608a2258b10e4606b910a",
+  "ak3_commit": "020dfeccf9d7e962a48400fc94d3e451df92eead",
+  "kernel_zram_source": {
+    "repository": "cctv18/android_kernel_common_oneplus_sm8750",
+    "commit": "2a4726b11594dd57d0779d2685fad5c81e5ed553",
+    "path": "drivers/block/zram/zram_drv.c",
+    "git_blob_sha1": "7b2fc33d341e55c1780a738bae56fa3d4b691797"
+  },
+  "known_runtime_warnings": 9,
+  "runtime_warning_raw_log_sha256": "1b2ba545d96a940a0f9526dcdf85477ad0e30f248877c61c842d15f2d99b3bbf"
+}

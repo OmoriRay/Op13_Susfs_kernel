@@ -1,0 +1,6 @@
+modules/op13_memory/** text eol=lf
+scripts/memory/** text eol=lf
+tests/memory/** text eol=lf
+docs/OP13-Memory-Companion.md text eol=lf
+.github/workflows/Package_OP13_Memory.yml text eol=lf
+scripts/extreme/README.md text eol=lf
