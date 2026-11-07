@@ -125,6 +125,7 @@ def main():
     apply(common,'0001-susfs-c7f670f5-oem118.patch')
     apply(baka,'0002-bakasu-priority-uid.patch')
     apply(common,'0003-o3-and-configurable-64k-mthp.patch')
+    apply(common,'0005-libbpf-const-correct-host.patch')
     run(sys.executable,ROOT/'scripts/zram/integrate.py','--tree',common)
     assert 'ksu_selinux_hide_running' not in (common/'security/selinux/hooks.c').read_text()
     assert 'CMD_SUSFS_SET_PRIORITY_UID_FILTER' in (baka/'kernel/supercall/dispatch.c').read_text()
@@ -139,7 +140,7 @@ def main():
     manifests=[]
     for patch in sorted((ROOT/'patches/extreme').glob('*.patch')):
         manifests.append({'file':patch.name,'sha256':hashlib.file_digest(patch.open('rb'),'sha256').hexdigest(),
-                          'applied_in_prepare':patch.name.startswith(('0001-','0002-','0003-')),
+                          'applied_in_prepare':patch.name.startswith(('0001-','0002-','0003-','0005-')),
                           'applied_in_build':patch.name.startswith('0004-'),
                           'applied_in_lab_max_only':patch.name.startswith('0100-')})
     (REPORT/'patches.json').write_text(json.dumps(manifests,indent=2))
