@@ -58,7 +58,7 @@ make "${args[@]}" -j2 V=1 KBUILD_SYMTYPES=1 fs/proc/task_mmu.o fs/susfs.o mm/hug
 if [[ "$variant" == lab-thin-zram-ab ]]; then
     make "${args[@]}" -j2 V=1 lib/op13_lz4/ drivers/block/zram/zcomp.o 2>&1 | tee "$report/zram-precheck.log"
     cp "$root/kernel_workspace/common/lib/op13_lz4/source-manifest.json" "$report/lz4-source-manifest.json"
-    llvm-nm --defined-only "$out/lib/op13_lz4/op13_lz4.o" > "$report/lz4-private-symbols.txt"
+    llvm-nm --defined-only "$out/lib/op13_lz4/built-in.a" > "$report/lz4-private-symbols.txt"
     if grep -E '[[:space:]][TWDB][[:space:]]LZ4_' "$report/lz4-private-symbols.txt"; then
         echo 'Unnamespaced upstream LZ4 symbol in private backend' >&2; exit 1
     fi
