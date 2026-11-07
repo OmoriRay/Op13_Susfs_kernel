@@ -60,7 +60,9 @@ def main():
     for flag in ('ZRAM', 'ZRAM_MULTI_COMP', 'ZRAM_WRITEBACK', 'ZRAM_TRACK_ENTRY_ACTIME', 'CRYPTO_LZ4', 'CRYPTO_ZSTD', 'LRU_GEN', 'PSI'):
         assert f'CONFIG_{flag}=y\n' in config, flag
     module_payload = {p.relative_to(MODULE).as_posix(): p.read_bytes() for p in MODULE.rglob('*') if p.is_file()}
-    module_payload['LICENSE'] = (ROOT / 'LICENSE').read_bytes()
+    # Existing Windows checkouts may have CRLF in the unchanged root license.
+    # Normalize this text so cloud/Linux and Windows builds use the same bytes.
+    module_payload['LICENSE'] = (ROOT / 'LICENSE').read_text(encoding='utf-8').encode()
     module_payload['README.md'] = (ROOT / 'docs/OP13-Memory-Companion.md').read_bytes()
     for name in ('customize.sh', 'service.sh', 'memory.sh', 'x1-handoff.sh', 'uninstall.sh', 'module.prop', 'skip_mount'):
         assert name in module_payload
