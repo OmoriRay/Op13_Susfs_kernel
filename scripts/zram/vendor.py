@@ -39,9 +39,21 @@ def vendor(archive, destination):
         lines = []
         for line in text.splitlines():
             if line.startswith('#if defined(__cplusplus) || (defined (__STDC_VERSION__)'):
-                line = '#if !defined(__KERNEL__) && (' + line[4:] + ')'
+                kernel_types = {
+                    'lz4.c': ['typedef u8 BYTE;', 'typedef u16 U16;', 'typedef u32 U32;',
+                              'typedef s32 S32;', 'typedef u64 U64;', 'typedef unsigned long uptrval;'],
+                    'lz4.h': ['typedef s8 LZ4_i8;', 'typedef u8 LZ4_byte;',
+                              'typedef u16 LZ4_u16;', 'typedef u32 LZ4_u32;'],
+                }
+                lines += ['#ifdef __KERNEL__', *kernel_types[name], '#elif ' + line[4:]]
+                continue
             lines.append(line)
         text = '\n'.join(lines) + '\n'
+        if name in ('lz4.c','lz4hc.c'):
+            text=re.sub(r'\bcurrent\b','op13_current_index',text)
+        if name=='lz4hc.c':
+            text=re.sub(r'\bMIN\b','OP13_LZ4_MIN',text)
+            text=re.sub(r'\bMAX\b','OP13_LZ4_MAX',text)
         (destination / name).write_text(text, encoding='utf-8', newline='\n')
         records.append({'file': name, 'upstream_sha256': hashlib.sha256(original).hexdigest(),
                         'ported_sha256': hashlib.sha256(text.encode()).hexdigest()})
@@ -56,7 +68,7 @@ def vendor(archive, destination):
                 'archive_sha256': SHA256, 'files': records, 'namespace_symbols': sorted(names),
                 'glue_files': {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT/'kernel/op13_lz4').iterdir()) if p.is_file()},
                 'namespace_sha256': hashlib.sha256(header.encode()).hexdigest(),
-                'changes': ['kernel-only C library includes/types', 'private symbol namespace',
+                'changes': ['kernel-only C library includes/types', 'private symbol and local macro namespace',
                             'heap helpers use kernel allocators; per-page path uses preallocated state'],
                 'kernel_boot_tested': False}
     (destination / 'source-manifest.json').write_text(json.dumps(manifest, indent=2) + '\n', encoding='utf-8')
