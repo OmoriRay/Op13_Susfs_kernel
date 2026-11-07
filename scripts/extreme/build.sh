@@ -68,7 +68,9 @@ import sys,json,re,shutil
 from pathlib import Path
 out=Path(sys.argv[1]);report=Path(sys.argv[2]);records=[]
 profile=json.loads((report/'profile-spec.json').read_text())
-for name in ['fs/proc/.task_mmu.o.cmd','fs/.susfs.o.cmd','mm/.huge_memory.o.cmd','block/.adios.o.cmd']:
+objects=['fs/proc/.task_mmu.o.cmd','fs/.susfs.o.cmd','mm/.huge_memory.o.cmd','block/.adios.o.cmd']
+if profile.get('zram_ab'):objects += ['lib/op13_lz4/.'+x+'.o.cmd' for x in ['backend','codec','support','lz4','lz4hc']]
+for name in objects:
     text=(out/name).read_text();assert ' -O3 ' in text,name
     assert '-fsanitize=kcfi' in text or '-fsanitize=cfi' in text,name
     lto_ok=('-flto=thin' in text) if profile['lto']=='thin' else ((' -flto ' in text or '-flto=full' in text) and '-flto=thin' not in text)

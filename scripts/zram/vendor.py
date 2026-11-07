@@ -54,6 +54,8 @@ def vendor(archive, destination):
         if p.is_file(): shutil.copyfile(p, destination / p.name)
     manifest = {'repository': 'https://github.com/lz4/lz4', 'commit': COMMIT,
                 'archive_sha256': SHA256, 'files': records, 'namespace_symbols': sorted(names),
+                'glue_files': {p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT/'kernel/op13_lz4').iterdir()) if p.is_file()},
+                'namespace_sha256': hashlib.sha256(header.encode()).hexdigest(),
                 'changes': ['kernel-only C library includes/types', 'private symbol namespace',
                             'heap helpers use kernel allocators; per-page path uses preallocated state'],
                 'kernel_boot_tested': False}
