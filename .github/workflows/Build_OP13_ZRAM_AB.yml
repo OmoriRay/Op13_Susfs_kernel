@@ -1,0 +1,52 @@
+name: OP13 ZRAM AB V1
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+concurrency:
+  group: op13-zram-ab-${{ github.ref }}
+  cancel-in-progress: false
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    steps:
+      - uses: actions/checkout@v5
+      - name: Free runner space and install dependencies
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends build-essential bc bison flex gawk libssl-dev libelf-dev libncurses-dev zlib1g-dev dwarves python3-pyelftools zstd lz4 cpio rsync mksh
+          sudo fallocate -l 8G /swapfile-op13
+          sudo chmod 600 /swapfile-op13
+          sudo mkswap /swapfile-op13
+          sudo swapon /swapfile-op13
+      - name: Test actual codec code and Android shell profiles
+        run: |
+          mkdir -p reports/codec downloads
+          curl --fail --location --retry 3 https://codeload.github.com/lz4/lz4/tar.gz/ebb370ca83af193212df4dcbadcc5d87bc0de2f0 -o downloads/lz4.tar.gz
+          python3 tests/zram/run_codec.py --archive downloads/lz4.tar.gz --out reports/codec
+          OP13MEM_TEST_SHELL=/bin/mksh python3 -m unittest discover -s tests/memory -v 2>&1 | tee reports/module-tests.log
+      - name: Prepare reviewed source and compile
+        run: |
+          python3 scripts/extreme/prepare.py
+          bash scripts/extreme/build.sh lab-thin-zram-ab prepare
+          bash scripts/extreme/build.sh lab-thin-zram-ab precheck
+          bash scripts/extreme/build.sh lab-thin-zram-ab compile
+          bash scripts/extreme/build.sh lab-thin-zram-ab package
+          python3 scripts/zram/package.py
+      - name: Upload source, ABI and compilation evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: OP13-ZRAM-AB-V1-audit
+          path: reports/
+          retention-days: 14
+      - name: Upload test kernel and paired companion
+        uses: actions/upload-artifact@v4
+        with:
+          name: OP13-ZRAM-AB-V1
+          path: artifacts/
+          compression-level: 0
+          retention-days: 14

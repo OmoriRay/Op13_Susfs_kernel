@@ -1,5 +1,6 @@
 {
   "common": {"repo": "https://github.com/cctv18/android_kernel_common_oneplus_sm8750.git", "commit": "2a4726b11594dd57d0779d2685fad5c81e5ed553"},
+  "lz4_op13": {"repo": "https://github.com/lz4/lz4", "commit": "ebb370ca83af193212df4dcbadcc5d87bc0de2f0", "sha256": "eb1a93e934d4fd29df6e2061ba0bf447568561764d758f4a5662c0e29370ffa9", "version": "1.10.0", "modes": ["fast", "MID level 2"]},
   "linux": {"repo": "https://github.com/gregkh/linux.git", "base": "4791134e4aebe300af2b409dc550610ef69fae3e", "target": "b5a1dc3ad4822c6edfb53429e9a3759c9b0ac2be", "version": "6.6.161"},
   "bakasu": {"repo": "https://github.com/Baka-SU/BakaSU.git", "commit": "516d3e87fbc986ccefdde2c2765f1700612441a9", "version_code": 35257, "uapi": 6},
   "susfs": {"commit": "c7f670f57b7d43d75066b6657f8aee9cdf580d96", "archive": "https://gitlab.com/api/v4/projects/simonpunk%2Fsusfs4ksu/repository/archive.tar.gz?sha=c7f670f57b7d43d75066b6657f8aee9cdf580d96", "sha256": "0a5909fad19a8d937c40337901a9ed87dd841954b0649e4c953a1ba6e6313049"},

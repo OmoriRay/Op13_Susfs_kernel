@@ -1,0 +1,7 @@
+config CRYPTO_OP13_LZ4
+	bool "OP13 experimental 4KB LZ4 1.10.0 / MID2 backends"
+	depends on ARM64 && ARM64_4K_PAGES
+	select CRYPTO_ALGAPI
+	help
+	  Adds lz4-op13 and lz4mid-op13 for 4KB ZRAM page comparisons.
+	  The original lz4 backend remains available. Experimental.

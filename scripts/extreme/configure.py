@@ -32,6 +32,8 @@ enabled=['KSU','KSU_SUSFS','KSU_MULTI_MANAGER_SUPPORT','KSU_SUSFS_PRIORITY_UID_F
 disabled=['KSU_TRACEPOINT_HOOK','KSU_MANUAL_HOOK','KSU_DEBUG','KSU_SUSFS_ENABLE_LOG','CFI_PERMISSIVE',
  'CC_OPTIMIZE_FOR_PERFORMANCE','CC_OPTIMIZE_FOR_SIZE','LOCALVERSION_AUTO','TRANSPARENT_HUGEPAGE_ALWAYS',
  'ZRAM_DEF_COMP_LZORLE','ZRAM_DEF_COMP_ZSTD','ZRAM_DEF_COMP_LZO','ZRAM_DEF_COMP_LZ4HC','AUTOFDO_CLANG']
+if profile.get('zram_ab'):enabled.append('CRYPTO_OP13_LZ4')
+else:disabled.append('CRYPTO_OP13_LZ4')
 for flag in enabled:setval(flag,True)
 for flag in disabled:setval(flag,False)
 full=profile['lto']=='full'

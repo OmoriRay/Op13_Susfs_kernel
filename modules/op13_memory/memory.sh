@@ -81,7 +81,7 @@ configure_device() {
     # Caller has verified inactive swap and saved a recovery configuration.
     writeval 1 "$Z/reset" || return 1
     writeval "$1" "$Z/comp_algorithm" || return 1
-    if [ "$1" = lz4 ] && [ -e "$Z/recomp_algorithm" ] && supported zstd; then
+    if [ "${AB_TEST:-0}" != 1 ] && [ "$1" = lz4 ] && [ -e "$Z/recomp_algorithm" ] && supported zstd; then
         writeval 'algo=zstd priority=1' "$Z/recomp_algorithm" || return 1
     fi
     writeval 0 "$Z/mem_limit" || return 1
@@ -140,10 +140,14 @@ boot() {
     mkdir -p "$STATE"; chmod 0700 "$STATE"
     PROFILE=$(readval "$STATE/profile" || true)
     [ -n "$PROFILE" ] || PROFILE=pandora_like
+    AB_TEST=0
     case "$PROFILE" in
         pandora_like) ALGO=lz4; PERCENT=200; SWAPPINESS=100; WATERMARK=200;;
         density) ALGO=zstd; PERCENT=200; SWAPPINESS=100; WATERMARK=200;;
         game) ALGO=lz4; PERCENT=100; SWAPPINESS=60; WATERMARK=150;;
+        ab-stock) ALGO=lz4; PERCENT=100; SWAPPINESS=100; WATERMARK=200; AB_TEST=1;;
+        ab-lz4) ALGO=lz4-op13; PERCENT=100; SWAPPINESS=100; WATERMARK=200; AB_TEST=1;;
+        ab-mid) ALGO=lz4mid-op13; PERCENT=100; SWAPPINESS=100; WATERMARK=200; AB_TEST=1;;
         *) log 'Unknown profile; no memory writes'; return 1;;
     esac
     BOOTID=$(readval "$P/sys/kernel/random/boot_id")
@@ -197,7 +201,7 @@ case "${1:-status}" in
         cat "$Z/comp_algorithm" "$Z/disksize" "$Z/mm_stat"
         ;;
     profile)
-        case "${2:-}" in pandora_like|density|game) ;; *) echo 'Use profile pandora_like|density|game'; exit 2;; esac
+        case "${2:-}" in pandora_like|density|game|ab-stock|ab-lz4|ab-mid) ;; *) echo 'Use profile pandora_like|density|game|ab-stock|ab-lz4|ab-mid'; exit 2;; esac
         mkdir -p "$STATE"; chmod 0700 "$STATE"
         printf '%s\n' "$2" > "$STATE/profile.new"
         mv -f "$STATE/profile.new" "$STATE/profile"

@@ -35,9 +35,12 @@ if Path(sys.argv[0]).name=='write-node':
  if (r/('fail-write-'+node)).exists():sys.exit(1)
  if node=='reset':
   put('/sys/block/zram0/disksize',0);put('/sys/block/zram0/initstate',0)
-  put('/sys/block/zram0/comp_algorithm','lzo lzo-rle [lz4] lz4hc zstd')
+  available=get('/sys/block/zram0/comp_algorithm').replace('[','').replace(']','').split()
+  put('/sys/block/zram0/comp_algorithm',' '.join('['+x+']' if x=='lz4' else x for x in available))
  elif node=='comp_algorithm':
-  put('/sys/block/zram0/comp_algorithm',' '.join('['+x+']' if x==val else x for x in ('lzo','lzo-rle','lz4','lz4hc','zstd')))
+  available=get('/sys/block/zram0/comp_algorithm').replace('[','').replace(']','').split()
+  if val not in available:sys.exit(1)
+  put('/sys/block/zram0/comp_algorithm',' '.join('['+x+']' if x==val else x for x in available))
  else:
   if node=='disksize' and (not val.isdigit() or int(val)<=0):
    print('Invalid argument: disksize must be positive',file=sys.stderr);sys.exit(1)
@@ -123,6 +126,33 @@ class MemoryTests(unittest.TestCase):
         self.assertIn('zram0 partition', self.text('/proc/swaps'))
         self.assertEqual(self.text('/proc/sys/vm/swappiness').strip(), '100')
         self.assertIn('algo=zstd priority=1', self.text(ZRAM + 'recomp_algorithm'))
+
+    def check_ab_profile(self, profile, algorithm):
+        self.put(ZRAM+'comp_algorithm','lzo lzo-rle [lz4] lz4hc zstd lz4-op13 lz4mid-op13')
+        self.put('/proc/meminfo','MemTotal: 23613496 kB\nMemAvailable: 8000000 kB\nSwapTotal: 0 kB\nSwapFree: 0 kB')
+        self.run_script('memory.sh','profile',profile)
+        self.run_script('memory.sh','boot')
+        self.assertIn('state=active\n',self.status())
+        self.assertIn('algorithm='+algorithm+'\n',self.status())
+        self.assertEqual(self.text(ZRAM+'disksize').strip(),'24180219904')
+        self.assertEqual(self.text('/proc/sys/vm/swappiness').strip(),'100')
+        self.assertEqual(self.text('/proc/sys/vm/page-cluster').strip(),'0')
+        self.assertEqual(self.text('/proc/sys/vm/watermark_scale_factor').strip(),'200')
+        self.assertNotIn('algo=zstd priority=1',self.text('/commands'))
+
+    def test_ab_stock_has_fixed_parameters(self):self.check_ab_profile('ab-stock','lz4')
+    def test_ab_lz4_has_fixed_parameters(self):self.check_ab_profile('ab-lz4','lz4-op13')
+    def test_ab_mid_has_fixed_parameters(self):self.check_ab_profile('ab-mid','lz4mid-op13')
+
+    def test_ab_backend_missing_is_blocked_without_reset(self):
+        self.run_script('memory.sh','profile','ab-mid')
+        self.run_script('memory.sh','boot',ok=False)
+        self.assertIn('state=blocked-algorithm',self.status())
+        commands=self.text('/commands')
+        self.assertNotIn('/reset',commands)
+        self.assertNotIn('swapoff',commands)
+        self.assertNotIn('mkswap',commands)
+        self.assertEqual(self.text(ZRAM+'disksize').strip(),'8000000000')
 
     def test_a_successful_command_without_active_swap_is_not_success(self):
         tool = self.root / 'system/bin/toybox'

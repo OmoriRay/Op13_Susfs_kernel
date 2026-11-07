@@ -32,6 +32,15 @@ jobs:
     timeout-minutes: 60
     steps:
       - uses: actions/checkout@v5
+      - name: Validate ZRAM A/B codec and module
+        if: contains(inputs.variants, 'lab-thin-zram-ab')
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends mksh liblz4-1
+          mkdir -p reports/codec downloads
+          curl --fail --location --retry 3 https://codeload.github.com/lz4/lz4/tar.gz/ebb370ca83af193212df4dcbadcc5d87bc0de2f0 -o downloads/lz4.tar.gz
+          python3 tests/zram/run_codec.py --archive downloads/lz4.tar.gz --out reports/codec
+          OP13MEM_TEST_SHELL=/bin/mksh python3 -m unittest discover -s tests/memory -v 2>&1 | tee reports/module-tests.log
       - name: Prepare pinned upstream integration
         run: python3 scripts/extreme/prepare.py
       - name: Upload prepared source snapshot
@@ -100,6 +109,9 @@ jobs:
         env:
           BUILD_PROFILE: ${{ matrix.variant }}
         run: bash scripts/extreme/build.sh "$BUILD_PROFILE" package
+      - name: Pair the newly compiled ZRAM AB Image and module
+        if: matrix.variant == 'lab-thin-zram-ab'
+        run: python3 scripts/zram/package.py
       - name: Upload build evidence
         if: always()
         uses: actions/upload-artifact@v4

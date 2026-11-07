@@ -11,5 +11,13 @@ SKIPUNZIP=0
 set_perm_recursive "$MODPATH" 0 0 0755 0644
 for f in memory.sh x1-handoff.sh service.sh action.sh uninstall.sh; do set_perm "$MODPATH/$f" 0 0 0755; done
 ui_print "OP13 Memory Companion installed. Reboot to apply."
-ui_print "Default: LZ4, 2x MemTotal logical capacity, swappiness 100."
+if [ -f "$MODPATH/ab-install" ]; then
+    mkdir -p /data/adb/op13_memory || abort "Cannot prepare A/B state"
+    chmod 0700 /data/adb/op13_memory
+    printf 'ab-stock\n' > /data/adb/op13_memory/profile.new || abort "Cannot save A/B baseline"
+    mv -f /data/adb/op13_memory/profile.new /data/adb/op13_memory/profile || abort "Cannot activate A/B baseline"
+    ui_print "Next boot: A/B baseline LZ4, 1x MemTotal, fixed reclaim parameters."
+else
+    ui_print "Default: LZ4, 2x MemTotal logical capacity, swappiness 100."
+fi
 ui_print "No live ZRAM reset was performed by this installer."

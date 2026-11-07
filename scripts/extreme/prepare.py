@@ -124,6 +124,7 @@ def main():
     apply(common,'0001-susfs-c7f670f5-oem118.patch')
     apply(baka,'0002-bakasu-priority-uid.patch')
     apply(common,'0003-o3-and-configurable-64k-mthp.patch')
+    run(sys.executable,ROOT/'scripts/zram/integrate.py','--tree',common)
     assert 'ksu_selinux_hide_running' not in (common/'security/selinux/hooks.c').read_text()
     assert 'CMD_SUSFS_SET_PRIORITY_UID_FILTER' in (baka/'kernel/supercall/dispatch.c').read_text()
     for tree in (common,baka):run('git','diff','--check',cwd=tree)

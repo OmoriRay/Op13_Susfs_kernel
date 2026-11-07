@@ -1,6 +1,6 @@
 id=op13_memory
 name=OP13 Memory Companion
-version=v1.0.1-experimental
-versionCode=10001
+version=v1.1.0-zram-ab-experimental
+versionCode=10100
 author=OmoriRay
 description=PJZ110 ColorOS 17 memory companion: verified ZRAM activation, Pandora-style capacity/reclaim profile, X1 ownership handoff. Experimental; reboot to apply changes.

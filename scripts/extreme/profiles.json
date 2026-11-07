@@ -4,5 +4,6 @@
   "lab-max": {"lto": "full", "hz": 1000, "adios": "3.3.0", "mtune": "oryon-1"},
   "lab-thin-adios33": {"lto": "thin", "hz": 250, "adios": "3.3.0", "mtune": null},
   "lab-thin-oryon": {"lto": "thin", "hz": 250, "adios": "3.1.6", "mtune": "oryon-1"},
-  "lab-thin-max": {"lto": "thin", "hz": 250, "adios": "3.3.0", "mtune": "oryon-1"}
+  "lab-thin-max": {"lto": "thin", "hz": 250, "adios": "3.3.0", "mtune": "oryon-1"},
+  "lab-thin-zram-ab": {"lto": "thin", "hz": 250, "adios": "3.3.0", "mtune": "oryon-1", "zram_ab": true}
 }

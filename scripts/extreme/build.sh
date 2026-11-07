@@ -54,6 +54,14 @@ args=(-C "$root/kernel_workspace/common" "O=$out" ARCH=arm64 LLVM=1 LLVM_IAS=1)
 if [[ "$profile_mtune" != none ]]; then args+=("KCFLAGS=-mtune=$profile_mtune"); fi
 if [[ "$stage" == precheck || "$stage" == all ]]; then
 make "${args[@]}" -j2 V=1 KBUILD_SYMTYPES=1 fs/proc/task_mmu.o fs/susfs.o mm/huge_memory.o block/adios.o drivers/interconnect/core.o 2>&1 | tee "$report/precheck.log"
+if [[ "$variant" == lab-thin-zram-ab ]]; then
+    make "${args[@]}" -j2 V=1 lib/op13_lz4/ drivers/block/zram/zcomp.o 2>&1 | tee "$report/zram-precheck.log"
+    cp "$root/kernel_workspace/common/lib/op13_lz4/source-manifest.json" "$report/lz4-source-manifest.json"
+    llvm-nm --defined-only "$out/lib/op13_lz4/op13_lz4.o" > "$report/lz4-private-symbols.txt"
+    if grep -E '[[:space:]][TWDB][[:space:]]LZ4_' "$report/lz4-private-symbols.txt"; then
+        echo 'Unnamespaced upstream LZ4 symbol in private backend' >&2; exit 1
+    fi
+fi
 python3 - "$out" "$report" <<'PY'
 import sys,json,re,shutil
 from pathlib import Path
