@@ -43,7 +43,7 @@ for base in modules modules_update; do
     # Validate before atomic replacement; source backups are never executed.
     sh -n "$tmp"
     chmod 0644 "$tmp"
-    chown 0:0 "$tmp"
+    if [ -z "$ROOT" ]; then chown 0:0 "$tmp"; fi
     mv -f "$tmp" "$file"
     echo "$(date +%s) ${1:-} $base: guarded only zram_apply and ram_expand_apply" >> "$STATE/handoff.log"
     trap - EXIT HUP INT TERM

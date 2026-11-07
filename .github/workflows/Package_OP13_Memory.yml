@@ -1,6 +1,7 @@
 name: OP13 BakaSU Memory Bundle
 on:
   workflow_dispatch:
+  workflow_call:
   push:
     branches: [bakasu-memory-v1]
     paths:

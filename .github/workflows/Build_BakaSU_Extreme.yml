@@ -3,6 +3,10 @@ name: OP13 BakaSU Extreme V2
 on:
   workflow_dispatch:
     inputs:
+      memory_bundle_only:
+        description: Package the pinned lab-thin-max Image with the memory companion; no kernel compilation
+        type: boolean
+        default: false
       prepared_run:
         description: Existing successful source snapshot run, or 0 to prepare sources
         type: string
@@ -22,7 +26,7 @@ concurrency:
 
 jobs:
   prepare:
-    if: inputs.prepared_run == '0'
+    if: inputs.prepared_run == '0' && !inputs.memory_bundle_only
     name: Prepare pinned OEM sources and current SUSFS
     runs-on: ubuntu-24.04
     timeout-minutes: 60
@@ -48,7 +52,7 @@ jobs:
   build:
     name: Build ${{ matrix.variant }}
     needs: prepare
-    if: always() && (needs.prepare.result == 'success' || (inputs.prepared_run != '0' && inputs.prepared_run != ''))
+    if: always() && !inputs.memory_bundle_only && (needs.prepare.result == 'success' || (inputs.prepared_run != '0' && inputs.prepared_run != ''))
     runs-on: ubuntu-24.04
     timeout-minutes: 360
     strategy:
@@ -113,3 +117,6 @@ jobs:
           path: artifacts/
           compression-level: 0
           retention-days: 14
+  memory_bundle:
+    if: inputs.memory_bundle_only
+    uses: ./.github/workflows/Package_OP13_Memory.yml
